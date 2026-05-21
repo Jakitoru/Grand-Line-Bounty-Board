@@ -1,0 +1,11 @@
+services:
+  one-piece-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: one-piece-app
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.local
+    restart: always

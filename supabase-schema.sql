@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS characters (
     description TEXT,
     image_url TEXT,
     is_custom BOOLEAN DEFAULT FALSE,
+    user_id UUID REFERENCES auth.users(id),
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -31,17 +32,25 @@ DROP POLICY IF EXISTS "Cho phép cập nhật nhân vật" ON characters;
 CREATE POLICY "Cho phép đọc công khai" ON characters
     FOR SELECT USING (true);
 
--- Tạo policy cho phép mọi người chèn dữ liệu mới (để tạo thẻ bounty)
+-- Tạo policy cho phép người dùng đã xác thực chèn dữ liệu mới
 CREATE POLICY "Cho phép tạo nhân vật mới" ON characters
-    FOR INSERT WITH CHECK (true);
+    FOR INSERT TO authenticated WITH CHECK (true);
 
--- Tạo policy cho phép xóa nhân vật (để gỡ bỏ lệnh truy nã và thực hiện sync)
+-- Tạo policy cho phép người dùng xóa nhân vật của chính họ
 CREATE POLICY "Cho phép xóa nhân vật" ON characters
-    FOR DELETE USING (true);
+    FOR DELETE TO authenticated USING (auth.uid() = user_id);
 
--- Tạo policy cho phép cập nhật nhân vật (nếu cần chỉnh sửa thông tin)
+-- Tạo policy cho phép người dùng cập nhật nhân vật của chính họ
 CREATE POLICY "Cho phép cập nhật nhân vật" ON characters
-    FOR UPDATE USING (true) WITH CHECK (true);
+    FOR UPDATE TO authenticated USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
+
+-- Setup Storage for avatars
+INSERT INTO storage.buckets (id, name, public) VALUES ('avatars', 'avatars', true) ON CONFLICT (id) DO NOTHING;
+
+CREATE POLICY "Avatar images are publicly accessible." ON storage.objects FOR SELECT USING ( bucket_id = 'avatars' );
+CREATE POLICY "Anyone can upload an avatar." ON storage.objects FOR INSERT TO authenticated WITH CHECK ( bucket_id = 'avatars' );
+CREATE POLICY "Anyone can update their own avatar." ON storage.objects FOR UPDATE TO authenticated USING ( auth.uid() = owner ) WITH CHECK ( bucket_id = 'avatars' );
+CREATE POLICY "Anyone can delete their own avatar." ON storage.objects FOR DELETE TO authenticated USING ( auth.uid() = owner );
 
 -- Xóa dữ liệu cũ nếu có
 TRUNCATE TABLE characters;
@@ -186,7 +195,7 @@ INSERT INTO characters (name, alias, bounty, affiliation, role, devil_fruit, dev
 (
     'Monkey D. Dragon',
     'Nhà Cách Mạng',
-    5000000000,
+    0,
     'Quân Cách Mạng',
     'Tổng tư lệnh',
     'Trái Thời Tiết (Dự kiến)',

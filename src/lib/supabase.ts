@@ -1,186 +1,124 @@
-import { createClient } from '@supabase/supabase-js';
-import { Character, DEFAULT_CHARACTERS } from './data';
+import { createClient as createBrowserClient } from '@/lib/supabase/client';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+// Create a single supabase client for the entire app
+export const supabase = createBrowserClient();
 
-// Kiểm tra xem Supabase đã được cấu hình chưa
-export const isSupabaseConfigured = Boolean(supabaseUrl && supabaseAnonKey);
+export interface Character {
+  id: number;
+  name: string;
+  alias: string;
+  bounty: number;
+  affiliation: string;
+  role: string;
+  devil_fruit: string;
+  devil_fruit_type: string;
+  hometown: string;
+  age?: number;
+  height?: number;
+  status: string;
+  description: string;
+  image_url: string;
+  is_custom: boolean;
+  user_id?: string;
+  created_at: string;
+}
 
-// Tạo Supabase client (sẽ báo lỗi nhẹ nếu thiếu biến môi trường, chúng ta bọc lại)
-export const supabase = isSupabaseConfigured
-  ? createClient(supabaseUrl, supabaseAnonKey)
-  : null;
+export const DEFAULT_CHARACTERS_PLACEHOLDER = "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=400";
 
 /**
- * Hàm lấy danh sách nhân vật.
- * Nếu có kết nối Supabase -> lấy từ DB.
- * Nếu không -> lấy từ LocalData kết hợp với localStorage (cho phần người dùng tự tạo).
+ * Fetch characters
  */
 export async function getCharacters(): Promise<Character[]> {
-  if (isSupabaseConfigured && supabase) {
-    try {
-      const { data, error } = await supabase
-        .from('characters')
-        .select('*')
-        .order('bounty', { ascending: false });
-      
-      if (!error && data) {
-        const uniqueNames = new Set<string>();
-        const cleanData: Character[] = [];
-
-        // Lọc bỏ các nhân vật bị lặp lại trong trường hợp DB bị clone nhiều lần
-        const castedData = data as Character[];
-        
-        for (const char of castedData) {
-          // Normalize name for deduplication
-          const nameKey = char.name.trim().toLowerCase();
-          if (!uniqueNames.has(nameKey)) {
-            uniqueNames.add(nameKey);
-            
-            const matchedDefault = DEFAULT_CHARACTERS.find(
-              dc => dc.name.toLowerCase() === nameKey
-            );
-
-            if (matchedDefault) {
-              cleanData.push({ 
-                ...char, 
-                image_url: matchedDefault.image_url, // Đảm bảo sử dụng link ảnh chuẩn 100% từ data.ts
-                alias: matchedDefault.alias,
-                is_custom: false
-              });
-            } else {
-              cleanData.push(char);
-            }
-          }
-        }
-        return cleanData;
-      }
-      console.warn("Supabase fetch failed, falling back to local storage:", error);
-    } catch (e) {
-      console.warn("Supabase exception, falling back to local storage:", e);
-    }
+  const { data, error } = await supabase
+    .from('characters')
+    .select('*')
+    .order('bounty', { ascending: false });
+  
+  if (error) {
+    console.error("Error fetching characters:", error);
+    return [];
   }
-
-  // Fallback sang Local Storage + Mock Data
-  if (typeof window !== 'undefined') {
-    const customData = localStorage.getItem('op_custom_characters');
-    const customCharacters: Character[] = customData ? JSON.parse(customData) : [];
-    return [...customCharacters, ...DEFAULT_CHARACTERS].sort((a, b) => b.bounty - a.bounty);
-  }
-
-  return DEFAULT_CHARACTERS;
+  
+  return data as Character[];
 }
 
 /**
- * Hàm thêm một nhân vật mới.
- * Nếu có Supabase -> thêm vào DB.
- * Nếu không -> thêm vào localStorage.
+ * Add character
  */
-export async function addCharacter(character: Omit<Character, 'id' | 'created_at'>): Promise<Character> {
-  const newId = typeof window !== 'undefined' ? Date.now() : Math.floor(Math.random() * 1000000);
-  const newChar: Character = {
-    ...character,
-    id: newId,
-    is_custom: true,
-    created_at: new Date().toISOString()
-  };
+export async function addCharacter(character: Omit<Character, 'id' | 'created_at' | 'is_custom'>): Promise<Character | null> {
+  const { data: userData } = await supabase.auth.getUser();
+  const user_id = userData.user?.id;
 
-  if (isSupabaseConfigured && supabase) {
-    try {
-      const { data, error } = await supabase
-        .from('characters')
-        .insert([character])
-        .select();
+  const { data, error } = await supabase
+    .from('characters')
+    .insert([{ ...character, is_custom: true, user_id }])
+    .select()
+    .single();
 
-      if (!error && data && data[0]) {
-        return data[0] as Character;
-      }
-      console.warn("Supabase insert failed, falling back to local storage:", error);
-    } catch (e) {
-      console.warn("Supabase exception during insert, falling back to local storage:", e);
-    }
+  if (error) {
+    console.error("Error adding character:", error);
+    return null;
   }
 
-  // Fallback sang Local Storage
-  if (typeof window !== 'undefined') {
-    const customData = localStorage.getItem('op_custom_characters');
-    const customCharacters: Character[] = customData ? JSON.parse(customData) : [];
-    const updated = [newChar, ...customCharacters];
-    localStorage.setItem('op_custom_characters', JSON.stringify(updated));
-  }
-
-  return newChar;
+  return data as Character;
 }
 
 /**
- * Xóa một nhân vật tự tạo (chỉ dành cho các nhân vật có is_custom = true)
+ * Update character
+ */
+export async function updateCharacter(id: number, character: Partial<Character>): Promise<Character | null> {
+  const { data, error } = await supabase
+    .from('characters')
+    .update(character)
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error) {
+    console.error("Error updating character:", error);
+    return null;
+  }
+
+  return data as Character;
+}
+
+/**
+ * Delete character
  */
 export async function deleteCharacter(id: number): Promise<boolean> {
-  if (isSupabaseConfigured && supabase) {
-    try {
-      const { error } = await supabase
-        .from('characters')
-        .delete()
-        .eq('id', id);
+  const { error } = await supabase
+    .from('characters')
+    .delete()
+    .eq('id', id);
 
-      if (!error) return true;
-      console.warn("Supabase delete failed:", error);
-    } catch (e) {
-      console.warn("Supabase exception during delete:", e);
-    }
+  if (error) {
+    console.error("Error deleting character:", error);
+    return false;
   }
 
-  if (typeof window !== 'undefined') {
-    const customData = localStorage.getItem('op_custom_characters');
-    if (customData) {
-      const customCharacters: Character[] = JSON.parse(customData);
-      const filtered = customCharacters.filter(c => c.id !== id);
-      localStorage.setItem('op_custom_characters', JSON.stringify(filtered));
-      return true;
-    }
-  }
-
-  return false;
+  return true;
 }
 
-export async function resyncDefaultImages(): Promise<boolean> {
-  if (isSupabaseConfigured && supabase) {
-    try {
-      console.log(`[Resync] Starting bulk resync of all ${DEFAULT_CHARACTERS.length} default characters...`);
-      
-      // 1. Xóa toàn bộ các nhân vật mặc định cũ
-      const { error: deleteError } = await supabase
-        .from('characters')
-        .delete()
-        .neq('is_custom', true);
-      
-      if (deleteError) {
-        console.error("[Resync] Delete failed:", deleteError);
-        return false;
-      }
+/**
+ * Upload image to Supabase Storage
+ */
+export async function uploadCharacterImage(file: File): Promise<string | null> {
+  const fileExt = file.name.split('.').pop();
+  const fileName = `${Math.random()}.${fileExt}`;
+  const filePath = `character-images/${fileName}`;
 
-      // 2. Chuẩn bị dữ liệu 60 nhân vật mới
-      const cleanCharacters = DEFAULT_CHARACTERS.map(({ id, ...charWithoutId }) => ({
-        ...charWithoutId,
-        is_custom: false
-      }));
+  const { error: uploadError } = await supabase.storage
+    .from('avatars')
+    .upload(filePath, file);
 
-      // 3. Tiến hành chèn hàng loạt (Bulk Insert)
-      const { error: insertError } = await supabase
-        .from('characters')
-        .insert(cleanCharacters);
-
-      if (insertError) {
-        console.error("[Resync] Insert failed:", insertError);
-        return false;
-      }
-
-      console.log("[Resync] Bulk resync completed successfully!");
-      return true;
-    } catch (e) {
-      console.error("Lỗi khi đồng bộ ảnh và nhân vật lên Supabase:", e);
-    }
+  if (uploadError) {
+    console.error("Error uploading image:", uploadError);
+    return null;
   }
-  return false;
+
+  const { data } = supabase.storage
+    .from('avatars')
+    .getPublicUrl(filePath);
+
+  return data.publicUrl;
 }
