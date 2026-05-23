@@ -16,7 +16,7 @@ export async function login(formData: FormData) {
   })
 
   if (error) {
-    return redirect('/login?message=Email hoặc mật khẩu không chính xác')
+    return redirect(`/login?message=${encodeURIComponent('Email hoặc mật khẩu không chính xác')}`)
   }
 
   revalidatePath('/', 'layout')
@@ -35,11 +35,11 @@ export async function signup(formData: FormData) {
   })
 
   if (error) {
-    return redirect('/login?message=Lỗi đăng ký: ' + error.message)
+    return redirect(`/login?message=${encodeURIComponent('Lỗi đăng ký: ' + error.message)}`)
   }
 
   revalidatePath('/', 'layout')
-  redirect('/login?message=Đăng ký thành công! Bạn có thể đăng nhập ngay.')
+  redirect(`/login?message=${encodeURIComponent('Đăng ký thành công! Bạn có thể đăng nhập ngay.')}`)
 }
 
 export async function logout() {

@@ -239,11 +239,11 @@ export default function Home() {
 
   const handleSyncData = async () => {
     if (!isAdmin) {
-      alert("⚠️ Chỉ Đô Đốc (Admin) mới có quyền đồng bộ lại dữ liệu hệ thống!");
+      alert("⚠️ Chỉ Thuyền Trưởng (Admin) mới có quyền đồng bộ lại dữ liệu hệ thống!");
       return;
     }
 
-    if (!confirm("Bạn có muốn đồng bộ lại danh sách 53 đại hải tặc mặc định không? (Các bản ghi cũ sẽ được làm sạch để tránh trùng lặp)")) return;
+    if (!confirm("Bạn có muốn đồng bộ lại danh sách 175 nhân vật mặc định không? (Các bản ghi cũ sẽ được làm sạch để tránh trùng lặp)")) return;
 
     setLoading(true);
     try {
@@ -363,7 +363,7 @@ export default function Home() {
               <div className="flex items-center gap-3">
                 <div className="flex flex-col items-end">
                   <span className="text-[10px] font-bold text-amber-500/70 uppercase">
-                    {isAdmin ? 'Đô Đốc (Admin)' : 'Thuyền Viên'}
+                    {isAdmin ? 'Thuyền Trưởng (Admin)' : 'Thuyền Viên'}
                   </span>
                   <span className="text-xs font-black text-white max-w-[100px] truncate">{user.user_metadata?.full_name || user.email}</span>
                 </div>
