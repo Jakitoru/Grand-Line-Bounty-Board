@@ -50,6 +50,7 @@ export default function Home() {
 
   // Auth State
   const [user, setUser] = useState<SupabaseUser | null>(null);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [uploading, setUploading] = useState<boolean>(false);
 
   // Form States
@@ -80,12 +81,28 @@ export default function Home() {
 
   // Auth Listener
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-    });
+    async function checkAuth() {
+      const { data: { session } } = await supabase.auth.getSession();
+      const currentUser = session?.user ?? null;
+      setUser(currentUser);
+      if (currentUser) {
+        const { data } = await supabase.from('profiles').select('role').eq('id', currentUser.id).single();
+        setIsAdmin(data?.role === 'admin');
+      } else {
+        setIsAdmin(false);
+      }
+    }
+    checkAuth();
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      const currentUser = session?.user ?? null;
+      setUser(currentUser);
+      if (currentUser) {
+        const { data } = await supabase.from('profiles').select('role').eq('id', currentUser.id).single();
+        setIsAdmin(data?.role === 'admin');
+      } else {
+        setIsAdmin(false);
+      }
     });
 
     return () => subscription.unsubscribe();
@@ -338,7 +355,9 @@ export default function Home() {
             {user ? (
               <div className="flex items-center gap-3">
                 <div className="flex flex-col items-end">
-                  <span className="text-[10px] font-bold text-amber-500/70 uppercase">Thuyền Viên</span>
+                  <span className="text-[10px] font-bold text-amber-500/70 uppercase">
+                    {isAdmin ? 'Đô Đốc (Admin)' : 'Thuyền Viên'}
+                  </span>
                   <span className="text-xs font-black text-white max-w-[100px] truncate">{user.user_metadata?.full_name || user.email}</span>
                 </div>
                 <button onClick={handleLogout} className="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-500 hover:text-red-400 transition-all">
@@ -539,7 +558,7 @@ export default function Home() {
                     </div>
                   </div>
 
-                  {user && selectedCharacter.user_id === user.id && (
+                  {user && (selectedCharacter.user_id === user.id || isAdmin) && (
                     <div className="mt-8 pt-8 border-t border-[#3b240e]/10 flex gap-4">
                       <button onClick={startEditing} className="flex-1 bg-amber-600 hover:bg-amber-500 text-slate-950 py-4 rounded-xl font-black uppercase text-[10px] tracking-widest transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2">
                         <Edit2 className="w-3.5 h-3.5" /> Chỉnh sửa

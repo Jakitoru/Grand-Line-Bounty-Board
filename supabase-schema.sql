@@ -28,6 +28,36 @@ DROP POLICY IF EXISTS "Cho phép tạo nhân vật mới" ON characters;
 DROP POLICY IF EXISTS "Cho phép xóa nhân vật" ON characters;
 DROP POLICY IF EXISTS "Cho phép cập nhật nhân vật" ON characters;
 
+-- Tạo bảng profiles để lưu trữ phân quyền
+CREATE TABLE IF NOT EXISTS profiles (
+  id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+  role VARCHAR(50) DEFAULT 'user' NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Enable RLS cho profiles
+ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Cho phép đọc profiles công khai" ON profiles;
+CREATE POLICY "Cho phép đọc profiles công khai" ON profiles
+    FOR SELECT USING (true);
+
+-- Hàm tự động tạo profile khi user mới đăng ký
+CREATE OR REPLACE FUNCTION public.handle_new_user() 
+RETURNS TRIGGER AS $$
+BEGIN
+  INSERT INTO public.profiles (id, role)
+  VALUES (new.id, 'user');
+  RETURN new;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- Trigger chạy hàm handle_new_user sau khi đăng ký
+DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
+CREATE TRIGGER on_auth_user_created
+  AFTER INSERT ON auth.users
+  FOR EACH ROW EXECUTE PROCEDURE public.handle_new_user();
+
 -- Tạo policy cho phép mọi người đọc dữ liệu
 CREATE POLICY "Cho phép đọc công khai" ON characters
     FOR SELECT USING (true);
@@ -36,16 +66,33 @@ CREATE POLICY "Cho phép đọc công khai" ON characters
 CREATE POLICY "Cho phép tạo nhân vật mới" ON characters
     FOR INSERT TO authenticated WITH CHECK (true);
 
--- Tạo policy cho phép người dùng xóa nhân vật của chính họ
+-- Tạo policy cho phép người dùng xóa nhân vật (của họ hoặc admin xóa bất kỳ)
 CREATE POLICY "Cho phép xóa nhân vật" ON characters
-    FOR DELETE TO authenticated USING (auth.uid() = user_id);
+    FOR DELETE TO authenticated 
+    USING (
+      auth.uid() = user_id OR 
+      EXISTS (SELECT 1 FROM profiles WHERE id = auth.uid() AND role = 'admin')
+    );
 
--- Tạo policy cho phép người dùng cập nhật nhân vật của chính họ
+-- Tạo policy cho phép người dùng cập nhật nhân vật (của họ hoặc admin cập nhật bất kỳ)
 CREATE POLICY "Cho phép cập nhật nhân vật" ON characters
-    FOR UPDATE TO authenticated USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
+    FOR UPDATE TO authenticated 
+    USING (
+      auth.uid() = user_id OR 
+      EXISTS (SELECT 1 FROM profiles WHERE id = auth.uid() AND role = 'admin')
+    ) 
+    WITH CHECK (
+      auth.uid() = user_id OR 
+      EXISTS (SELECT 1 FROM profiles WHERE id = auth.uid() AND role = 'admin')
+    );
 
 -- Setup Storage for avatars
 INSERT INTO storage.buckets (id, name, public) VALUES ('avatars', 'avatars', true) ON CONFLICT (id) DO NOTHING;
+
+DROP POLICY IF EXISTS "Avatar images are publicly accessible." ON storage.objects;
+DROP POLICY IF EXISTS "Anyone can upload an avatar." ON storage.objects;
+DROP POLICY IF EXISTS "Anyone can update their own avatar." ON storage.objects;
+DROP POLICY IF EXISTS "Anyone can delete their own avatar." ON storage.objects;
 
 CREATE POLICY "Avatar images are publicly accessible." ON storage.objects FOR SELECT USING ( bucket_id = 'avatars' );
 CREATE POLICY "Anyone can upload an avatar." ON storage.objects FOR INSERT TO authenticated WITH CHECK ( bucket_id = 'avatars' );
