@@ -217,7 +217,8 @@ export default function Home() {
       height: heightNum,
       status: formData.status,
       description: formData.description || `Hải tặc khét tiếng thuộc thế lực ${formData.affiliation}.`,
-      image_url: formData.image_url || "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=400"
+      image_url: formData.image_url || "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=400",
+      is_custom: true
     };
 
     try {
@@ -237,8 +238,12 @@ export default function Home() {
   };
 
   const handleSyncData = async () => {
-    // Gỡ bỏ yêu cầu đăng nhập để cứu cánh khi bị lỗi rate limit email
-    if (!confirm("Bạn có muốn đồng bộ toàn bộ 53 đại hải tặc lên hệ thống không? (Dữ liệu trùng sẽ được bỏ qua)")) return;
+    if (!isAdmin) {
+      alert("⚠️ Chỉ Đô Đốc (Admin) mới có quyền đồng bộ lại dữ liệu hệ thống!");
+      return;
+    }
+
+    if (!confirm("Bạn có muốn đồng bộ lại danh sách 53 đại hải tặc mặc định không? (Các bản ghi cũ sẽ được làm sạch để tránh trùng lặp)")) return;
 
     setLoading(true);
     try {
@@ -344,13 +349,15 @@ export default function Home() {
               AI Proof
             </button>
 
-            <button 
-              onClick={handleSyncData}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 hover:bg-indigo-500/20 transition-all text-xs font-bold"
-            >
-              <Loader2 className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
-              Sync Data
-            </button>
+            {isAdmin && (
+              <button 
+                onClick={handleSyncData}
+                className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 hover:bg-indigo-500/20 transition-all text-xs font-bold"
+              >
+                <Loader2 className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
+                Sync Data
+              </button>
+            )}
 
             {user ? (
               <div className="flex items-center gap-3">
