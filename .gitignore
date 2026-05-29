@@ -39,3 +39,18 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Bổ sung để nén/nộp bài (Tránh nộp nhầm)
+*.zip
+*.rar
+*.tar
+*.gz
+*.7z
+
+# Các thư mục IDE & Editor
+.vscode/
+.idea/
+
+# Windows OS / Mac OS
+Thumbs.db
+.DS_Store

@@ -1,0 +1,1402 @@
+TRƯỜNG ĐẠI HỌC ĐÀ LẠT
+KHOA CÔNG NGHỆ THÔNG TIN
+CÁC CÔNG NGHỆ MỚI TRONG PHÁT TRIỂN PHẦN MỀM
+XÂY DỰNG ỨNG DỤNG WEB TỰ ĐỘNG HÓA SINH TÀI LIỆU KỸ THUẬT CHO CÁC DỰ ÁN MÃ NGUỒN MỞ DỰA TRÊN GENERATIVE AI
+GIẢNG VIÊN HƯỚNG DẪN: KS. Nguyễn Trọng Hiếu
+             
+                                                              Sinh viên thực hiện:
+                                                                                  Ngô Bá Tài – 2212453
+Đà Lạt, ngày 30 tháng 5 năm 2026
+NHẬN XÉT 
+LỜI CẢM ƠN
+ĐỀ CƯƠNG THỰC HIỆN DỰ ÁN
+Tên đề tài: “Xây Dựng Ứng Dụng Web Tự Động Hóa Sinh Tài Liệu Kỹ Thuật Cho Các Dự Án Mã Nguồn Mở Dựa Trên Generative AI”
+Sinh viên thực hiện: Ngô Bá Tài
+Giảng viên hướng dẫn: KS. Nguyễn Trọng Hiếu
+1. TỔNG QUAN DỰ ÁN
+Tài liệu kỹ thuật (đặc biệt là README.md) đóng vai trò cốt lõi trong vòng đời phát triển phần mềm, giúp truyền đạt trúc hệ thống, hướng dẫn triển khai và tạo điều kiện thuận lợi để chia sẻ dự án với cộng đồng. Tuy nhiên, thực tế cho thấy quy trình biên soạn tài liệu hiện nay vẫn tốn rất nhiều thời gian và thường bị xem nhẹ do tính chất thủ công, lặp đi lặp lại. Việc tận dụng các chatbot AI thông thường đòi hỏi thao tác sao chép rời rạc từng tệp tin, gây khó khăn trong việc tổng hợp dữ liệu và làm mất đi góc nhìn vĩ mô của toàn hệ thống. Do đó, việc nghiên cứu và xây dựng một ứng dụng trực tuyến (OpenDoc AI) ứng dụng Generative AI để tự động trích xuất, xâu chuỗi thông tin từ kho lưu trữ GitHub và sinh ra tài liệu chuẩn mực là rất cần thiết. Công cụ này không chỉ giải phóng sức lao động, giúp nhà phát triển tập trung vào việc tối ưu hóa mã nguồn, mà còn hỗ trợ đắc lực trong việc đóng gói dự án thành các sản phẩm mã nguồn mở chuyên nghiệp. Qua đó, ứng dụng góp phần nâng cao chất lượng hồ sơ năng lực, đồng thời mang lại sự thuận tiện cho các quản lý kỹ thuật trong quá trình theo dõi, đánh giá tổng quan kiến trúc đồ án một cách khách quan và nhanh chóng.
+2. MỤC TIÊU ĐỀ TÀI
+OpenDoc AI là nền tảng SaaS hỗ trợ lập trình viên tự động hóa quy trình viết tài liệu README.md chuyên nghiệp bằng cách phân tích trực tiếp mã nguồn từ GitHub thông qua AI (Gemini). Với mục đích biến mọi dự án cá nhân thành dự án mã nguồn mở trong vài giây. Opendoc AI nhắm tới các tiêu chí như tiết kiệm thời gian viết tài liệu, Zero-setup, tạo tài liệu góc nhìn kiến trúc tổng thể.
+3. NỘI DUNG ĐỀ TÀI
+Phân tích và làm rõ yêu cầu của hệ thống tự động sinh tài liệu
+Thiết kế cơ sở dữ liệu và luồng xác thực người dùng
+Thiết kế giao diện website với không gian làm việc trực quan
+Xây dựng luồng xử lý dữ liệu và tích hợp các API (GitHub API, Gemini API)
+Xây dựng và hoàn thiện ứng dụng web OpenDoc AI
+Triển khai, kiểm thử và đánh giá hệ thống
+Viết báo cáo tổng kết đề tài
+4. CÔNG CỤ SỬ DỤNG
+Frontend: Next.js 14+, Tailwind CSS, Shadcn/UI, @uiw/react-md-editor (hoặc monaco-editor).
+Backend: Next.js Route Handlers.
+Database &amp; Auth: Supabase (PostgreSQL, GoTrue) và RLS (Row Level Security).
+AI: Google Gemini API.
+Integration: GitHub REST API.
+5. KẾ HOẠCH THỰC HIỆN 
+Kế hoạch này được xây dựng để thực hiện trong 7 ngày
+STT
+Nội dung thực hiện 
+Thời gian
+1
+Thiết lập Next.js và Supabase, UI có split-pane cơ bản
+10/05/2026 – 11/05/2026
+2
+Xây dựng Pipeline kết nối GitHub API và logic lọc tệp
+12/05/2026 – 13/05/2026
+3
+Tích hợp Gemini API, tinh chỉnh Prompt và xử lý Markdown stream
+14/05/2026 – 15/05/2026
+4
+Kiểm thử ứng dụng sử dụng github actions, tối ưu hóa trải nghiệm người dùng và deploy lên VPS 
+16/05/2026
+6. TIÊU CHÍ ĐÁNH GIÁ KẾT QUẢ
+- Đăng nhập thành công bằng GitHub.
+- Phân tích đúng cấu trúc bất kỳ repo public nào.
+- AI sinh ra Markdown có cấu trúc đầy đủ và chính xác.
+- Giao diện Split-pane có Sidebar cây thư mục và Preview thời gian thực.
+- Hỗ trợ lưu trạng thái tài liệu (Bản nháp/Bản hoàn thành) và cho phép copy hoặc tải file README.md về máy người dùng.
+MỤC LỤC
+ TOC \o "1-3" \h \z \u CHƯƠNG 1: TỔNG QUAN PAGEREF _Toc230707611 \h 1
+1.1. Giới thiệu đề tài PAGEREF _Toc230707612 \h 1
+1.2. Mục tiêu đề tài PAGEREF _Toc230707613 \h 2
+1.3.1 Đối tượng nghiên cứu PAGEREF _Toc230707614 \h 3
+1.4. Nội dung thực hiện PAGEREF _Toc230707615 \h 4
+CHƯƠNG 2: CƠ SỞ LÝ THUYẾT VÀ CÔNG NGHỆ PAGEREF _Toc230707616 \h 6
+2.1. Các khái niệm cơ bản PAGEREF _Toc230707617 \h 6
+2.1.1. Trí tuệ nhân tạo tạo sinh PAGEREF _Toc230707618 \h 6
+2.1.2. Giao diện lập trình ứng dụng PAGEREF _Toc230707619 \h 6
+2.1.3. Backend-as-a-Service PAGEREF _Toc230707620 \h 7
+2.1.4. Software-as-a-Service PAGEREF _Toc230707621 \h 8
+2.2. Công nghệ Frontend PAGEREF _Toc230707622 \h 9
+2.2.1. Thư viện ReactJS và Framework Next.js PAGEREF _Toc230707623 \h 9
+2.2.2. Thư viện Tailwind CSS PAGEREF _Toc230707624 \h 10
+2.2.3. Thư viện quản lý trình soạn thảo Markdown PAGEREF _Toc230707625 \h 11
+2.2.4. Thư viện giả lập dòng lệnh trên trình duyệt xterm.js PAGEREF _Toc230707626 \h 11
+2.3. Công nghệ Backend và Cơ sở dữ liệu PAGEREF _Toc230707627 \h 12
+2.3.1. Nền tảng Supabase PAGEREF _Toc230707628 \h 12
+2.3.2. Hệ quản trị cơ sở dữ liệu PostgreSQL PAGEREF _Toc230707629 \h 13
+2.3.3 Giao thức kết nối thời gian thực và SSH PAGEREF _Toc230707630 \h 14
+2.4. Trí tuệ nhân tạo và Dịch vụ tích hợp PAGEREF _Toc230707631 \h 14
+2.4.1. Google Gemini API PAGEREF _Toc230707632 \h 14
+2.4.2. GitHub REST API PAGEREF _Toc230707633 \h 15
+2.5. Công nghệ triển khai và vận hành PAGEREF _Toc230707634 \h 16
+2.5.1. Droplet DigitalOcean PAGEREF _Toc230707635 \h 16
+2.5.2. Nền tảng ảo hóa Docker PAGEREF _Toc230707636 \h 17
+2.5.3. Web server nginx PAGEREF _Toc230707637 \h 17
+CHƯƠNG 3: PHÂN TÍCH VÀ THIẾT KẾ HỆ THỐNG PAGEREF _Toc230707638 \h 19
+3.1. Kiến trúc hệ thống tổng thể PAGEREF _Toc230707639 \h 19
+3.2. Phân tích yêu cầu chức năng PAGEREF _Toc230707640 \h 20
+3.3. Sơ đồ use-case PAGEREF _Toc230707641 \h 23
+3.3.1. Chức năng Đăng ký/Đăng nhập PAGEREF _Toc230707642 \h 23
+3.3.2. Chức năng Quản lý Dự án PAGEREF _Toc230707643 \h 24
+3.3.3. Chức năng Quản lý và Chỉnh sửa Tài liệu PAGEREF _Toc230707644 \h 25
+3.3.4. Chức năng Thu thập mã nguồn và Trích xuất AI PAGEREF _Toc230707645 \h 26
+3.3.5. Chức năng quản trị hệ thống PAGEREF _Toc230707646 \h 27
+3.4. Thiết kế cơ sở dữ liệu PAGEREF _Toc230707647 \h 29
+3.4.1. Bảng profiles PAGEREF _Toc230707648 \h 29
+3.4.2. Bảng projects PAGEREF _Toc230707649 \h 30
+3.4.3. Bảng documents PAGEREF _Toc230707650 \h 31
+3.4.4 Bảng admin_configs PAGEREF _Toc230707651 \h 32
+3.4.5 Bảng user_usage PAGEREF _Toc230707652 \h 33
+3.4.6 Bảng analytics PAGEREF _Toc230707653 \h 34
+3.4.7. Sơ đồ mối quan hệ giữa các bảng PAGEREF _Toc230707654 \h 35
+3.4.8. Các RLS trong dự án PAGEREF _Toc230707655 \h 36
+CHƯƠNG 4: XÂY DỰNG ỨNG DỤNG PAGEREF _Toc230707656 \h 37
+4.1. Môi trường phát triển PAGEREF _Toc230707657 \h 37
+4.1.1. IDE - Visual Studio Code PAGEREF _Toc230707658 \h 37
+4.1.2. Git - Công cụ quản lý mã nguồn PAGEREF _Toc230707659 \h 37
+4.1.3. npm - Công cụ quản lý gói của NodeJS PAGEREF _Toc230707660 \h 37
+4.1.4. Docker - Công cụ ảo hóa môi trường triển khai PAGEREF _Toc230707661 \h 40
+4.2. Cấu trúc thư mục dự án PAGEREF _Toc230707662 \h 41
+4.2.1. Cấu trúc thư mục tổng quan PAGEREF _Toc230707663 \h 41
+4.2.2. Bảng tổng hợp các thư mục chính PAGEREF _Toc230707664 \h 42
+4.2.3. Danh sách trang và tuyến đường ứng với thư mục app/ PAGEREF _Toc230707665 \h 42
+4.2.4. Danh sách các service có trong dự án PAGEREF _Toc230707666 \h 43
+4.3. Xây dựng các module chính PAGEREF _Toc230707667 \h 44
+4.3.1. Module xác thực và định danh người dùng PAGEREF _Toc230707668 \h 44
+4.3.2. Module quản lý danh sách dự án PAGEREF _Toc230707669 \h 44
+4.3.3. Module thu thập và lọc dữ liệu mã nguồn PAGEREF _Toc230707670 \h 44
+4.3.4. Module tích hợp AI sinh tài liệu tự động PAGEREF _Toc230707671 \h 44
+4.3.5. Module không gian làm việc và soạn thảo PAGEREF _Toc230707672 \h 44
+4.4. Quản lý trạng thái và giao diện toàn cục PAGEREF _Toc230707673 \h 45
+4.4.1. Giới thiệu PAGEREF _Toc230707674 \h 45
+4.4.2. Quản lý chủ đề giao diện với next-themes PAGEREF _Toc230707675 \h 45
+4.4.3. Quản lý trạng thái luồng văn bản PAGEREF _Toc230707676 \h 45
+4.4.4. Trạng thái đồng bộ giữa khung soạn thảo và khung xem trước PAGEREF _Toc230707677 \h 45
+4.5 Ứng dụng AI trong quá trình phát triển PAGEREF _Toc230707678 \h 45
+4.6 Triển khai hệ thống PAGEREF _Toc230707679 \h 45
+4.6.1 Đóng gói ứng dụng với Docker PAGEREF _Toc230707680 \h 45
+4.6.2 Triển khai lên máy chủ ảo và cấu hình Reverse Proxy bằng Nginx PAGEREF _Toc230707681 \h 45
+4.6.3 Cấu hình tên miền và chứng chỉ bảo mật (SSL) qua Cloudflare PAGEREF _Toc230707682 \h 45
+CHƯƠNG 5: KẾT LUẬN VÀ HƯỚNG PHÁT TRIỂN PAGEREF _Toc230707683 \h 46
+5.1 Kết luận PAGEREF _Toc230707684 \h 46
+5.2 Hạn chế của hệ thống PAGEREF _Toc230707685 \h 47
+5.3 Hướng phát triển PAGEREF _Toc230707686 \h 48
+TÀI LIỆU THAM KHẢO PAGEREF _Toc230707687 \h 49
+PHỤ LỤC PAGEREF _Toc230707688 \h 50
+Phụ lục A: Danh sách các prompt và skills đã sử dụng trong quá trình thực hiện dự án PAGEREF _Toc230707689 \h 50
+Phụ lục B: Tổng hợp một số tài liệu được sinh bởi AI trong quá trình thực hiện dự án PAGEREF _Toc230707690 \h 53
+CHƯƠNG 1: TỔNG QUAN
+1.1. Giới thiệu đề tài
+Trong kỷ nguyên công nghệ số hiện nay, phần mềm mã nguồn mở đóng vai trò quan trọng trong sự phát triển của ngành công nghệ thông tin. Đối với bất kỳ dự án phần mềm nào, tài liệu kỹ thuật (đặc biệt là tệp README.md) luôn được xem là một bản giới thiệu về dự án. Tài liệu kỹ thuật không chỉ giúp minh bạch hóa kiến trúc hệ thống, hướng dẫn người dùng cuối cách cài đặt và sử dụng, mà còn tạo điều kiện thuận lợi để thu hút cộng đồng cùng tham gia đóng góp.
+Tuy nhiên, trong quá trình phát triển phần mềm cho thấy việc biên soạn tài liệu kỹ thuật thường bị xem nhẹ và bỏ ngỏ. Nguyên nhân chính là do công việc này đòi hỏi tính thủ công cao, mang tính lặp đi lặp lại và tiêu tốn nhiều thời gian của lập trình viên. Khi đối mặt với áp lực tiến độ dự án, các nhà phát triển thường ưu tiên việc hoàn thiện logic nghiệp vụ hơn là việc viết tài liệu.
+Bên cạnh đó, sự bùng nổ của Trí tuệ nhân tạo tạo sinh đã mang lại nhiều công cụ hỗ trợ lập trình đa dạng, từ các chatbot (ChatGPT, Gemini), tác tử thông minh (Cursor, GitHub Copilot) cho đến các công cụ giao diện dòng lệnh (AI CLI). Dù vậy, các giải pháp này vẫn tồn tại những hạn chế nhất định trong việc tự động hóa biên soạn tài liệu tổng thể. 
+Đối với các chatbot thông thường, người dùng phải sao chép và dán thủ công từng tệp tin rời rạc, dẫn đến việc AI mất đi bối cảnh toàn cục của dự án và không thể tự động xâu chuỗi các thông tin hạ tầng quan trọng (như tệp cấu hình môi trường .env, kịch bản triển khai hay danh sách thư viện phụ thuộc). Trong khi đó, các AI Agent tuy có khả năng đọc hiểu mã nguồn nhưng lại tập trung chủ yếu vào việc hỗ trợ viết code (góc nhìn vi mô), đồng thời bắt buộc người dùng phải tải toàn bộ dự án về máy tính cá nhân và thiết lập môi trường cục bộ phức tạp. Mặt khác, các công cụ AI CLI lại tạo ra rào cản sử dụng khi đòi hỏi kỹ năng thao tác trên terminal, hoàn toàn thiếu đi không gian làm việc trực quan để lập trình viên có thể dễ dàng tinh chỉnh và xem trước tài liệu theo thời gian thực. Xuất phát từ những bất cập nêu trên, đề tài "Xây Dựng Ứng Dụng Web Tự Động Hóa Sinh Tài Liệu Kỹ Thuật Cho Các Dự Án Mã Nguồn Mở Dựa Trên Generative AI" được lựa chọn để nghiên cứu và phát triển. OpenDoc AI là một nền tảng phần mềm dạng dịch vụ (SaaS) ứng dụng sức mạnh của Generative AI (Google Gemini API) kết hợp với giao diện lập trình ứng dụng của GitHub (GitHub REST API).
+Hệ thống cung cấp trải nghiệm không cần cài đặt, cho phép người dùng chỉ cần cung cấp đường dẫn kho lưu trữ. Ứng dụng sẽ tự động phân tích cấu trúc cây thư mục, chắt lọc các tệp tin trọng yếu và đóng vai trò như một chuyên gia tài liệu để sinh ra bản đặc tả kiến trúc hoàn chỉnh. Đề tài hướng tới mục tiêu giải phóng sức lao động cho lập trình viên, giúp họ dễ dàng chuyển đổi các dự án cá nhân thành những ứng dụng mã nguồn mở chất lượng cao, sẵn sàng chia sẻ tới cộng đồng một cách chuyên nghiệp và nhanh chóng nhất.
+1.2. Mục tiêu đề tài
+Mục tiêu tổng quát của đề tài là xây dựng hệ thống OpenDoc AI - một ứng dụng nền tảng phần mềm dạng dịch vụ (SaaS) hiện đại, giúp lập trình viên tự động hóa quy trình phân tích kho lưu trữ mã nguồn và sinh tài liệu kỹ thuật (README.md) một cách chuẩn mực. Hệ thống hướng đến việc số hóa và tối ưu hóa toàn bộ quy trình biên soạn tài liệu, từ việc thu thập mã nguồn, trích xuất ngữ cảnh hệ thống, đến sinh nội dung tự động bằng trí tuệ nhân tạo và cung cấp không gian chỉnh sửa trực quan, nhằm tạo ra một công cụ thiết thực phục vụ nhu cầu đóng gói và xuất bản dự án mã nguồn mở của các nhà phát triển phần mềm.
+Về mặt chức năng, hệ thống được thiết kế với ba nhóm tính năng chính. Thứ nhất là nhóm chức năng xác thực và quản lý tài khoản, cho phép người dùng đăng nhập thông qua GitHub OAuth, quản lý các dự án cá nhân và đồng bộ hồ sơ tự động. Thứ hai là nhóm chức năng thu thập và xử lý dữ liệu, bao gồm việc trích xuất cây thư mục từ đường dẫn GitHub, lọc thông minh các tệp tin quan trọng mang tính kiến trúc, và API trí tuệ nhân tạo để sinh tài liệu dựa trên ngữ cảnh toàn cục. Thứ ba là nhóm chức năng không gian làm việc, cung cấp giao diện soạn thảo chia đôi màn hình tích hợp khả năng hiển thị cây thư mục dự án, chỉnh sửa văn bản Markdown và xem trước kết quả dưới dạng HTML theo thời gian thực, đồng thời hỗ trợ lưu trữ trạng thái và tải xuống tài liệu nhanh chóng.
+Về mặt công nghệ, đề tài hướng đến việc ứng dụng mô hình Phần mềm dạng dịch vụ (SaaS) kết hợp với kiến trúc Backend-as-a-Service (BaaS) thông qua nền tảng Supabase, cùng với các công nghệ web tiên tiến như Next.js cho xử lý giao diện và API ngầm, Tailwind CSS cho thiết kế hiển thị, kết hợp cùng Google Gemini API và GitHub REST API. Kiến trúc hệ thống được thiết kế bảo mật với cơ chế bảo mật cấp hàng (Row Level Security - RLS) và tự động hóa đồng bộ dữ liệu bằng Triggers, đảm bảo tính an toàn và toàn vẹn dữ liệu. Đặc biệt, ứng dụng được định hướng triển khai thực tế lên máy chủ ảo thông qua công nghệ ảo hóa Docker và máy chủ web Nginx, mang lại trải nghiệm truy cập trực tiếp không cần cài đặt ổn định trên trình duyệt.
+Thông qua việc đạt được các mục tiêu trên, hệ thống OpenDoc AI kỳ vọng sẽ trở thành công cụ đắc lực giúp lập trình viên tiết kiệm thời gian, giải quyết bài toán khó khăn trong việc viết tài liệu thủ công, từ đó dễ dàng chuyển đổi các dự án cá nhân thành ứng dụng mã nguồn mở chất lượng cao để chia sẻ tới cộng đồng. Đề tài cũng là cơ hội để sinh viên thực hiện tiếp cận, ứng dụng các công nghệ mới trong phát triển ứng dụng web và tích hợp AI, từ khâu phân tích, thiết kế, lập trình đến triển khai hệ thống, qua đó nâng cao kỹ năng chuyên môn toàn diện và khả năng giải quyết vấn đề thực tiễn trong ngành công nghệ thông tin.
+1.3. Đối tượng và phạm vi nghiên cứu
+1.3.1 Đối tượng nghiên cứu
+Quy trình tự động hóa việc thu thập, phân tích mã nguồn và sinh tài liệu kỹ thuật (đặc tả README.md) cho các dự án phát triển phần mềm.
+Việc ứng dụng mô hình Trí tuệ nhân tạo tạo sinh, cụ thể là nền tảng Google Gemini API, kết hợp với kỹ thuật Prompt Engineering để phân tích và tổng hợp ngữ cảnh kiến trúc hệ thống từ các tệp tin cấu hình.
+Kiến trúc phát triển phần mềm hiện đại, bao gồm mô hình Phần mềm dạng dịch vụ (SaaS), Backend-as-a-Service (thông qua nền tảng Supabase) và các công nghệ xây dựng giao diện ứng dụng web tiên tiến (Next.js, Tailwind CSS).
+Phương pháp tích hợp giao diện lập trình ứng dụng của bên thứ ba, đặc biệt là GitHub REST API, và kỹ thuật tối ưu hóa giới hạn truy vấn trong thu thập dữ liệu tự động.
+1.4. Nội dung thực hiện
+Để đạt được các mục tiêu đã đề ra, quá trình thực hiện đề tài được triển khai tuần tự và logic qua các nội dung trọng tâm sau đây:
+Nghiên cứu nền tảng và công nghệ: Tiến hành tìm hiểu, đánh giá và lựa chọn các công nghệ phù hợp nhất cho dự án. Trọng tâm bao gồm hệ sinh thái ReactJS/Next.js cho phát triển giao diện và API định tuyến; nền tảng Supabase cho quản trị cơ sở dữ liệu PostgreSQL và dịch vụ xác thực; cùng thư viện Tailwind CSS cho định kiểu giao diện. Đặc biệt, nghiên cứu về cách thức hoạt động, cấu trúc dữ liệu trả về của GitHub REST API và cách tích hợp mô hình ngôn ngữ lớn thông qua Google Gemini API.
+Phân tích yêu cầu và thiết kế hệ thống: Khảo sát quy trình viết tài liệu thực tế để xây dựng danh sách yêu cầu chức năng và phi chức năng. Từ đó, tiến hành thiết kế kiến trúc hệ thống tổng thể, mô hình hóa các luồng nghiệp vụ, và phác thảo giao diện người dùng theo hướng tối giản, tập trung vào không gian soạn thảo chia đôi màn hình.
+Thiết kế cơ sở dữ liệu và bảo mật dữ liệu: Xây dựng mô hình dữ liệu quan hệ với các bảng chính bao gồm thông tin người dùng, dự án và tài liệu. Triển khai các ràng buộc toàn vẹn dữ liệu, thiết lập cơ chế bảo mật mức hàng (Row Level Security - RLS) để ngăn chặn truy cập chéo, và viết các hàm tự động hóa nhằm đồng bộ thông tin hồ sơ người dùng ngay khi xác thực thành công.
+Xây dựng và tích hợp các module chức năng: Tiến hành lập trình ứng dụng theo từng giai đoạn, bắt đầu từ module xác thực người dùng qua GitHub OAuth. Tiếp theo, xây dựng luồng thu thập dữ liệu với khả năng phân tích cây thư mục và lọc tệp tin thông minh. Sau đó, tích hợp prompt engineering và xử lý luồng dữ liệu văn bản trả về từ Gemini. Cuối cùng, hoàn thiện không gian làm việc trực quan với trình soạn thảo Markdown và tính năng xem trước thời gian thực.
+Phân quyền người dùng cơ bản và các xây dựng các tính năng quản trị hệ thống (Quản lý các API key và web terminal)
+Triển khai, kiểm thử và vận hành hệ thống: Đóng gói toàn bộ mã nguồn ứng dụng bằng nền tảng ảo hóa Docker (cấu hình Dockerfile và Docker Compose). Triển khai hệ thống lên máy chủ ảo (VPS) vận hành hệ điều hành Debian, cấu hình máy chủ web Nginx làm proxy ngược và thiết lập chứng chỉ bảo mật, tên miền thông qua Cloudflare. Tiến hành kiểm thử toàn diện các luồng chức năng để đảm bảo tính ổn định và khả năng chịu tải.
+Viết báo cáo và hoàn thiện tài liệu: Tổng hợp kết quả của toàn bộ quá trình nghiên cứu, phân tích, thiết kế và thi công phần mềm. Hoàn thiện tài liệu báo cáo tổng kết chi tiết, đánh giá những ưu nhược điểm của hệ thống hiện tại, từ đó đề xuất các hướng phát triển, nâng cấp ứng dụng trong tương lai.
+CHƯƠNG 2: CƠ SỞ LÝ THUYẾT VÀ CÔNG NGHỆ
+2.1. Các khái niệm cơ bản
+2.1.1. Trí tuệ nhân tạo tạo sinh 
+Trí tuệ nhân tạo tạo sinh là một phân nhánh tiên tiến của lĩnh vực trí tuệ nhân tạo, tập trung vào khả năng tự động tạo ra các nội dung hoàn toàn mới và nguyên bản như văn bản, mã nguồn, hình ảnh hay âm thanh dựa trên việc học hỏi quy luật từ các tập dữ liệu khổng lồ. Khác với các hệ thống AI truyền thống thường chỉ dừng lại ở tác vụ phân loại hoặc dự đoán, Generative AI, đặc biệt là các hệ thống được xây dựng trên nền tảng Mô hình Ngôn ngữ Lớn (LLMs), sở hữu khả năng phân tích và thấu hiểu ngữ cảnh tự nhiên một cách sâu sắc. Nhờ đó, công nghệ này có thể duy trì tính nhất quán khi xử lý các chuỗi thông tin phức tạp và thực hiện linh hoạt nhiều tác vụ đòi hỏi tư duy logic cao như suy luận, tóm tắt và giải quyết các bài toán lập trình.
+Trong lĩnh vực phát triển phần mềm, Trí tuệ nhân tạo tạo sinh đang tạo ra những bước tiến đột phá khi không chỉ giới hạn ở việc gợi ý mã nguồn đơn lẻ mà đã đủ năng lực đọc hiểu toàn bộ kiến trúc hệ thống để tổng hợp và biên soạn tài liệu kỹ thuật. Ứng dụng thực tiễn vào dự án OpenDoc AI, hệ thống khai thác sức mạnh của nền tảng Google Gemini API kết hợp cùng kỹ thuật Prompt Engineering nhằm định hướng AI hoạt động như một chuyên gia viết tài liệu chuyên nghiệp. Bằng cách tiếp nhận đầu vào là sơ đồ cây thư mục và nội dung các tệp cấu hình cốt lõi, mô hình AI sẽ tự động phân tích bối cảnh vĩ mô của kho lưu trữ và sinh ra tệp đặc tả README.md với định dạng đầy đủ, giúp lập trình viên tối ưu hóa triệt để quy trình đóng gói dự án phần mềm.
+2.1.2. Giao diện lập trình ứng dụng 
+Giao diện lập trình ứng dụng (Application Programming Interface - API) là một tập hợp các quy định, giao thức và công cụ phần mềm cho phép các ứng dụng khác nhau giao tiếp, tương tác và trao đổi dữ liệu với nhau một cách tự động và an toàn. Đóng vai trò như một cầu nối trung gian, API tiếp nhận các yêu cầu từ phía máy khách, chuyển giao đến hệ thống máy chủ để xử lý nghiệp vụ và phản hồi kết quả một cách chính xác mà không đòi hỏi các hệ thống phải hiểu sâu về mã nguồn hay kiến trúc nội bộ của nhau. Trong xu hướng phát triển phần mềm hiện đại, đặc biệt là đối với các hệ thống phân tán và mô hình phần mềm dạng dịch vụ (SaaS), API trở thành thành phần kiến trúc không thể thiếu nhằm đơn giản hóa quy trình tích hợp, thúc đẩy tính module hóa và tối ưu hóa khả năng tái sử dụng tài nguyên công nghệ trên môi trường Internet.
+Trong kiến trúc tổng thể của dự án OpenDoc AI, giao diện lập trình ứng dụng đóng vai trò là phương thức kết nối cốt lõi để hiện thực hóa luồng xử lý dữ liệu tự động từ các nền tảng bên ngoài. Ứng dụng khai thác song song hai API bao gồm GitHub REST API để tương tác với kho lưu trữ mã nguồn và Google Gemini API để sử dụng cho quá trình tạo tài liệu kỹ thuật. Thông qua các điểm cuối của GitHub REST API, hệ thống thực hiện quét sơ đồ cây thư mục và tải song song nội dung của các tệp tin cấu hình trọng yếu. Ngay sau đó, toàn bộ dữ liệu ngữ cảnh này được xâu chuỗi và chuyển tiếp qua Google Gemini API nhằm kích hoạt mô hình ngôn ngữ lớn xử lý và trả kết quả dưới dạng luồng ký tự, giúp hoàn thiện không gian làm việc trực quan và đồng bộ dữ liệu thời gian thực cho người dùng cuối.
+2.1.3. Backend-as-a-Service 
+Backend-as-a-Service (BaaS) là một mô hình dịch vụ điện toán đám mây cung cấp sẵn các hạ tầng và giải pháp phần mềm phía máy chủ nhằm hỗ trợ tối đa cho các nhà phát triển ứng dụng. Thay vì phải tốn tài nguyên để thiết lập, quản trị máy chủ và tự xây dựng các chức năng nền tảng từ đầu, lập trình viên có thể tận dụng BaaS để tích hợp nhanh chóng các nghiệp vụ phức tạp như quản trị cơ sở dữ liệu, xác thực định danh, lưu trữ tệp tin đám mây và thông báo đẩy. Các dịch vụ này được cung cấp thông qua các giao diện lập trình ứng dụng hoặc bộ công cụ phát triển phần mềm được chuẩn hóa. Nhờ việc giải phóng gánh nặng quản lý cơ sở hạ tầng, mô hình BaaS giúp các nhóm phát triển rút ngắn đáng kể vòng đời sản xuất phần mềm, đồng thời cho phép họ tập trung nguồn lực vào việc tối ưu hóa giao diện người dùng và hoàn thiện logic nghiệp vụ cốt lõi của ứng dụng.
+Ứng dụng vào thực tiễn dự án OpenDoc AI, kiến trúc Backend-as-a-Service được triển khai triệt để thông qua việc tích hợp nền tảng mã nguồn mở Supabase. Đóng vai trò là xương sống xử lý dữ liệu của toàn bộ hệ thống, Supabase cung cấp sẵn một hệ quản trị cơ sở dữ liệu PostgreSQL mạnh mẽ kết hợp cùng dịch vụ xác thực người dùng linh hoạt. Nhờ tận dụng giải pháp BaaS này, dự án không chỉ nhanh chóng thiết lập thành công luồng đăng nhập an toàn thông qua cổng GitHub OAuth mà còn dễ dàng tích hợp các cơ chế bảo mật chuyên sâu như Bảo mật mức hàng (Row Level Security - RLS) và các hàm tự động hóa. Việc này đảm bảo tính cô lập và toàn vẹn dữ liệu cho từng tài khoản người dùng theo đúng tiêu chuẩn của mô hình phần mềm dạng dịch vụ (SaaS), minh chứng cho tính hiệu quả của việc ứng dụng BaaS trong phát triển phần mềm hiện đại.
+2.1.4. Software-as-a-Service
+Phần mềm dạng dịch vụ (Software-as-a-Service - SaaS) là một mô hình phân phối phần mềm tiên tiến trên nền tảng điện toán đám mây, trong đó các ứng dụng được lưu trữ tập trung trên máy chủ của nhà cung cấp và phân phối tới người dùng cuối thông qua môi trường mạng Internet. Thay vì phải tải xuống mã nguồn, cài đặt môi trường và bảo trì ứng dụng trên từng thiết bị cá nhân, người dùng có thể truy cập và sử dụng dịch vụ trực tiếp thông qua trình duyệt web ở bất kỳ đâu. Mô hình này giúp loại bỏ hoàn toàn các rào cản về cấu hình phần cứng hệ thống và khả năng tương thích hệ điều hành, đồng thời đảm bảo người dùng luôn được trải nghiệm phiên bản phần mềm mới nhất, an toàn nhất một cách tự động và đồng bộ mà không cần thực hiện các thao tác nâng cấp thủ công.
+Kế thừa triết lý thiết kế của mô hình này, dự án OpenDoc AI được định hướng và phát triển như một nền tảng SaaS chuyên biệt hỗ trợ quy trình biên soạn tài liệu kỹ thuật. Hệ thống mang đến trải nghiệm sử dụng hoàn toàn không yêu cầu thiết lập môi trường trên các thiết bị cá nhân, cho phép lập trình viên chỉ cần đăng nhập thông qua GitHub và cung cấp đường dẫn kho lưu trữ mã nguồn để bắt đầu làm việc. Toàn bộ các quy trình tính toán phức tạp, từ việc quét sơ đồ tệp tin, phân tích cấu trúc đến việc gọi mô hình trí tuệ nhân tạo sinh văn bản đều được thực thi và quản lý ngầm trên hạ tầng máy chủ ảo. Nhờ việc ứng dụng triệt để mô hình SaaS, OpenDoc AI cung cấp một không gian làm việc trực quan, bảo mật và luôn sẵn sàng trên nền tảng web, giúp tối ưu hóa tối đa thời gian và công sức của các nhà phát triển trong việc đóng gói dự án.
+2.2. Công nghệ Frontend
+2.2.1. Thư viện ReactJS và Framework Next.js
+ReactJS là một thư viện JavaScript mã nguồn mở được phát triển bởi Meta, chuyên dụng để xây dựng các giao diện người dùng có tính tương tác cao. Điểm mạnh cốt lõi của ReactJS nằm ở kiến trúc phân mảnh dựa trên thành phần và công nghệ DOM ảo. Kiến trúc thành phần cho phép lập trình viên chia nhỏ giao diện thành các khối chức năng độc lập, dễ dàng tái sử dụng và bảo trì. Trong khi đó, DOM ảo giúp tối ưu hóa quá trình cập nhật giao diện bằng cách tính toán và chỉ kết xuất lại những thành phần có sự thay đổi dữ liệu, từ đó cải thiện hiệu suất cho các ứng dụng trang đơn.
+Mặc dù mạnh mẽ, ReactJS thuần túy vẫn tồn tại những hạn chế nhất định về tối ưu hóa công cụ tìm kiếm và tốc độ tải trang ban đầu. Để giải quyết vấn đề này, Next.js ra đời như một Framework toàn diện được phát triển trên nền tảng ReactJS bởi Vercel. Next.js cung cấp các cơ chế kết xuất linh hoạt như Kết xuất phía máy chủ và Tạo trang tĩnh. Đặc biệt, với kiến trúc App Router thế hệ mới, Next.js tích hợp sẵn hệ thống định tuyến mạnh mẽ cùng khả năng xây dựng các điểm cuối giao tiếp ngay trong cùng một mã nguồn, giúp chuẩn hóa và đơn giản hóa việc kết nối giữa giao diện người dùng và máy chủ.
+Trong kiến trúc của dự án OpenDoc AI, sự kết hợp giữa ReactJS và Next.js (phiên bản 14+) đóng vai trò nền tảng cho toàn bộ hệ thống. Thư viện ReactJS được ứng dụng để phát triển giao diện không gian làm việc trực quan, quản lý các trạng thái phức tạp của luồng dữ liệu văn bản và đồng bộ hóa thao tác giữa khung soạn thảo với khung xem trước theo thời gian thực. Mặt khác, Framework Next.js cung cấp hạ tầng bảo mật vững chắc để triển khai luồng thu thập và xử lý dữ liệu. Nhờ cơ chế hoạt động phía máy chủ của Next.js, các tác vụ nhạy cảm như tương tác với GitHub API thông qua mã thông báo cá nhân hay gửi yêu cầu tới Google Gemini API đều được thực thi ngầm và an toàn tuyệt đối, ngăn chặn hoàn toàn nguy cơ rò rỉ khóa bảo mật ra môi trường máy khách.
+2.2.2. Thư viện Tailwind CSS
+Tailwind CSS là một framework CSS theo hướng tiện ích, được thiết kế để tối ưu hóa và đẩy nhanh quá trình phát triển giao diện người dùng. Khác biệt hoàn toàn so với các thư viện truyền thống vốn cung cấp sẵn các thành phần giao diện cố định, Tailwind cung cấp một hệ thống toàn diện các lớp tiện ích cấp thấp. Phương pháp này cho phép lập trình viên định dạng và xây dựng các thành phần tùy chỉnh trực tiếp ngay bên trong mã nguồn cấu trúc (HTML hoặc JSX). Cách tiếp cận đột phá này giúp loại bỏ sự phụ thuộc vào các tệp tin CSS rời rạc, giải quyết triệt để vấn đề đặt tên lớp phức tạp và ngăn chặn tình trạng mã nguồn định dạng bị phình to trong quá trình duy trì dự án.
+Điểm mạnh vượt trội của Tailwind CSS nằm ở khả năng tối ưu hóa hiệu suất và tính linh hoạt cao trong thiết kế đáp ứng. Thông qua cơ chế tự động quét và loại bỏ các lớp không được sử dụng (PurgeCSS) trong quá trình đóng gói sản phẩm, thư viện đảm bảo kích thước tệp định dạng đầu ra luôn ở mức tối thiểu, giúp ứng dụng đạt tốc độ tải trang nhanh. Bên cạnh đó, Tailwind tích hợp sẵn hệ thống tiền tố trực quan, giúp lập trình viên dễ dàng điều chỉnh giao diện tương thích với nhiều kích thước màn hình thiết bị và các trạng thái tương tác khác nhau (như trỏ chuột, nhấp chuột) mà không cần phải viết thêm các khối mã truy vấn phương tiện (media queries) thủ công.
+Trong quá trình xây dựng dự án OpenDoc AI, Tailwind CSS được lựa chọn làm công cụ định kiểu chủ đạo cho toàn bộ hệ thống giao diện. Thư viện được kết hợp chặt chẽ với bộ thành phần Shadcn/UI để thiết kế các khu vực chức năng như thẻ thông tin dự án và không gian làm việc chia đôi màn hình. Đặc biệt, Tailwind CSS đóng vai trò nền tảng trong chức năng giao diện tối mặc định của hệ thống. Bằng cách sử dụng linh hoạt các biến thể lớp định dạng theo chủ đề, ứng dụng đảm bảo tuân thủ nghiêm ngặt các tiêu chuẩn về độ tương phản và trải nghiệm người dùng (UI/UX), mang lại một môi trường làm việc hiện đại, đồng nhất và hạn chế tình trạng nhức mỏi mắt cho lập trình viên.
+2.2.3. Thư viện quản lý trình soạn thảo Markdown
+Markdown là một ngôn ngữ đánh dấu văn bản, được thiết kế với mục tiêu tối ưu hóa sự thuận tiện trong việc đọc và viết dưới dạng văn bản thuần túy, sau đó có thể dễ dàng chuyển đổi thành các định dạng cấu trúc web như HTML. Trong quá trình phát triển các ứng dụng nền tảng web hiện đại, việc tích hợp một trình soạn thảo Markdown đòi hỏi sự hỗ trợ từ các thư viện chuyên dụng có khả năng xử lý, phân tích cú pháp và kết xuất nội dung một cách an toàn, hiệu suất cao. Các thư viện này không chỉ đơn thuần cung cấp một không gian nhập liệu văn bản mà còn hỗ trợ hàng loạt tính năng nâng cao như định dạng tự động, tô sáng cú pháp mã nguồn và đặc biệt là cung cấp giao diện chia đôi màn hình để người dùng có thể xem trước kết quả định dạng theo thời gian thực. Một trong những giải pháp nổi bật và được tối ưu hóa tốt nhất cho hệ sinh thái React hiện nay là thư viện @uiw/react-md-editor.
+Trong khuôn khổ của dự án OpenDoc AI, thư viện @uiw/react-md-editor được lựa chọn và tích hợp để đóng vai trò làm nơi làm việc trực quan. Nhờ khả năng xử lý và kết xuất dữ liệu linh hoạt của thư viện, ứng dụng đã xây dựng thành công giao diện làm việc chia đôi màn hình. Cụ thể, khu vực bên trái đảm nhiệm vai trò tiếp nhận luồng văn bản Markdown được sinh ra liên tục từ giao diện lập trình ứng dụng trí tuệ nhân tạo cũng như các thao tác tinh chỉnh thủ công của lập trình viên, trong khi khu vực bên phải chịu trách nhiệm biên dịch và hiển thị kết quả HTML ngay lập tức. Hơn thế nữa, thư viện trình soạn thảo này còn được can thiệp sâu để đồng bộ hóa hoàn toàn với hệ thống quản lý chủ đề (themes) toàn cục, đảm bảo khả năng hiển thị tương thích tuyệt đối với chế độ nền tối mặc định nhằm mang lại trải nghiệm sử dụng trọn vẹn và chuyên nghiệp nhất.
+2.2.4. Thư viện giả lập dòng lệnh trên trình duyệt xterm.js
+xterm.js là một thư viện mã nguồn mở được viết bằng TypeScript, chuyên dùng để xây dựng các trình giả lập dòng lệnh trực tiếp trên nền tảng trình duyệt web. Thư viện này được tin dùng bởi nhiều dự án lớn như VS Code nhờ khả năng hiển thị chính xác và xử lý mượt mà các luồng dữ liệu văn bản. Trong hệ thống, xterm.js đóng vai trò là giao diện hiển thị chính, cho phép quản trị viên thao tác trực tiếp với máy chủ ảo ngay trên bảng điều khiển. Công cụ này tái tạo trải nghiệm dòng lệnh thực tế, từ việc nhận thao tác gõ phím đến hiển thị kết quả phản hồi theo thời gian thực.
+Về mặt kiến trúc, bản thân xterm.js không tự thiết lập kết nối mạng mà chỉ chịu trách nhiệm vẽ giao diện đồ họa và thu thập dữ liệu đầu vào. Để tạo ra luồng điều khiển hoàn chỉnh, thư viện này được kết hợp với giao thức WebSocket nhằm truyền tải dữ liệu hai chiều giữa trình duyệt và máy chủ liên tục. Khi quản trị viên gõ lệnh, dữ liệu được truyền về máy chủ để thực thi, sau đó kết quả trả về sẽ được kết xuất trực tiếp lên màn hình của xterm.js. Bên cạnh đó, dự án còn tích hợp gói mở rộng @xterm/addon-fit giúp giao diện dòng lệnh có khả năng tự động co giãn và thích ứng hoàn hảo với mọi kích thước màn hình thiết bị.
+2.3. Công nghệ Backend và Cơ sở dữ liệu
+2.3.1. Nền tảng Supabase
+Nền tảng Supabase là một giải pháp mã nguồn mở cung cấp dịch vụ Backend-as-a-Service (BaaS), được phát triển như một sự thay thế cho các nền tảng truyền thống với kiến trúc lõi là hệ quản trị cơ sở dữ liệu quan hệ PostgreSQL. Nền tảng này cung cấp một hệ sinh thái toàn diện bao gồm quản trị cơ sở dữ liệu, dịch vụ xác thực người dùng, lưu trữ tệp tin và các hàm thực thi theo sự kiện. Nhờ việc được xây dựng trực tiếp trên kiến trúc của PostgreSQL, Supabase mang lại khả năng truy vấn phức tạp, hỗ trợ các ràng buộc toàn vẹn dữ liệu chặt chẽ và cung cấp các giao diện lập trình ứng dụng (API) tự động tương tác với cơ sở dữ liệu. Điều này giúp các nhà phát triển phần mềm rút ngắn thời gian xây dựng hạ tầng máy chủ mà vẫn đảm bảo được hiệu năng, tính bảo mật và khả năng mở rộng của hệ thống.
+Trong dự án OpenDoc AI, Supabase được lựa chọn làm nền tảng quản lý cơ sở dữ liệu và xác thực người dùng. Hệ thống tích hợp dịch vụ Supabase Auth kết hợp với nhà cung cấp GitHub OAuth để thiết lập luồng đăng nhập an toàn và quản lý phiên làm việc của lập trình viên. Về mặt lưu trữ, dự án triển khai hệ quản trị PostgreSQL trên Supabase với cấu trúc ba bảng chính bao gồm hồ sơ người dùng (profiles), danh sách kho lưu trữ và nội dung tài liệu. Để đảm bảo tính bảo mật và cô lập dữ liệu cho mô hình phần mềm dạng dịch vụ (SaaS), nền tảng hỗ trợ khởi tạo cấu trúc bảng và kích hoạt cơ chế bảo mật cấp hàng (Row Level Security - RLS) cho toàn bộ các bảng dữ liệu. Bên cạnh đó, nền tảng còn được khai thác để thiết lập các trình kích hoạt tự động kết nối với hàm hệ thống, tự động hóa việc khởi tạo hồ sơ cá nhân ngay khi có tài khoản mới đăng ký, giúp đảm bảo tính đồng bộ dữ liệu tuyệt đối giữa phân hệ xác thực và phân hệ nghiệp vụ.
+2.3.2. Hệ quản trị cơ sở dữ liệu PostgreSQL
+Hệ quản trị cơ sở dữ liệu PostgreSQL là một hệ thống quản trị cơ sở dữ liệu quan hệ mã nguồn mở tiên tiến và mạnh mẽ bậc nhất hiện nay. Trải qua hơn ba thập kỷ phát triển, PostgreSQL nổi bật với độ tin cậy cao, tính toàn vẹn dữ liệu xuất sắc và khả năng đáp ứng nghiêm ngặt các tiêu chuẩn ACID trong giao dịch cơ sở dữ liệu. Không chỉ hỗ trợ hoàn hảo các truy vấn ngôn ngữ truy vấn có cấu trúc (SQL) truyền thống, hệ quản trị này còn tích hợp nhiều tính năng hiện đại như khả năng lưu trữ dữ liệu phi cấu trúc, đánh chỉ mục nâng cao, cùng với hệ thống phân quyền và bảo mật dữ liệu phức tạp. Nhờ kiến trúc linh hoạt và khả năng mở rộng vượt trội, PostgreSQL đã trở thành nền tảng lưu trữ tiêu chuẩn cho hàng loạt ứng dụng phần mềm dạng dịch vụ quy mô lớn, nơi đòi hỏi khả năng xử lý luồng dữ liệu liên tục và độ bảo mật thông tin khắt khe.
+Trong định hướng phát triển của nền tảng OpenDoc AI, PostgreSQL đóng vai trò là nơi lưu trữ dữ liệu tầng thấp được vận hành thông qua dịch vụ đám mây Supabase. Hệ quản trị này được thiết kế với cấu trúc chuẩn hóa bao gồm ba bảng dữ liệu chính: bảng dữ liệu người dùng, bảng quản lý thông tin kho lưu trữ và bảng lưu trữ nội dung văn bản. Ngoài ra, ứng dụng còn sử dụng tính năng Bảo mật mức hàng (Row Level Security - RLS). Tính năng này cho phép hệ thống thiết lập các chính sách kiểm soát truy cập trực tiếp tại tầng cơ sở dữ liệu, đảm bảo mỗi người dùng chỉ có quyền xem, sửa và quản lý các dự án và tài liệu thuộc quyền sở hữu của chính họ. Thêm vào đó, dự án còn ứng dụng ngôn ngữ lập trình thủ tục PL/pgSQL của PostgreSQL để viết các hàm nghiệp vụ và trình kích hoạt tự động, giúp tự động hóa hoàn toàn quy trình tạo lập và đồng bộ thông tin hồ sơ ngay khi người dùng hoàn tất quá trình xác thực đăng nhập
+2.3.3 Giao thức kết nối thời gian thực và SSH
+SSH là giao thức mạng mật mã chuyên dụng để thiết lập các kết nối an toàn và điều khiển máy chủ từ xa thông qua giao diện dòng lệnh. Tuy nhiên, môi trường trình duyệt web sử dụng chuẩn HTTP truyền thống lại hoạt động theo cơ chế phi trạng thái , không thể đáp ứng yêu cầu duy trì luồng dữ liệu liên tục của giao thức SSH. Do đó, hệ thống tích hợp công nghệ WebSocket thông qua thư viện Socket.io để thiết lập một kênh truyền thông tin hai chiều toàn thời gian thực giữa trình duyệt máy khách và máy chủ. Sự kết hợp này giúp vượt qua rào cản kỹ thuật của HTTP, cho phép duy trì phiên làm việc liên tục để đáp ứng các thao tác điều khiển mà không cần tải lại trang.
+Trong kiến trúc của ứng dụng, hệ thống sử dụng một tiến trình Node.js độc lập để làm cầu nối chuyển tiếp dữ liệu. Tại tầng này, thư viện ssh2 đảm nhiệm vai trò tiếp nhận các thao tác phím từ Socket.io, đóng gói chúng thành lệnh SSH và gửi trực tiếp đến hệ điều hành của máy chủ ảo. Ngược lại, mọi kết quả kết xuất từ hệ điều hành sẽ đi theo luồng đảo ngược, truyền qua WebSocket và hiển thị ngay lập tức lên trình duyệt của quản trị viên. Cơ chế này không chỉ đảm bảo độ trễ truyền tải ở mức thấp nhất mà còn giữ nguyên vẹn tiêu chuẩn bảo mật mã hóa nghiêm ngặt của kết nối SSH.
+2.4. Trí tuệ nhân tạo và Dịch vụ tích hợp
+2.4.1. Google Gemini API
+Google Gemini API là giao diện lập trình ứng dụng cho phép các nhà phát triển tích hợp mô hình ngôn ngữ lớn Gemini, được nghiên cứu và phát triển bởi Google, vào các hệ thống phần mềm. Mô hình Gemini nổi bật với kiến trúc đa phương thức, mang lại khả năng suy luận logic vượt trội và thấu hiểu ngôn ngữ tự nhiên. Thông qua bộ giao diện lập trình này, các ứng dụng có thể trực tiếp khai thác sức mạnh của trí tuệ nhân tạo để thực hiện hàng loạt tác vụ phức tạp như phân tích dữ liệu chuyên sâu, tóm tắt văn bản, và đặc biệt là tự động sinh mã nguồn hoặc tài liệu dựa trên các ngữ cảnh được cung cấp. Việc hỗ trợ trả về kết quả dưới dạng luồng dữ liệu liên tục cũng là một thế mạnh kỹ thuật của API này, giúp tối ưu hóa thời gian chờ đợi và nâng cao trải nghiệm tương tác trực tiếp cho người dùng.
+Trong kiến trúc của dự án OpenDoc AI, Google Gemini API được sử dụng để tự động hóa hoàn toàn quy trình biên soạn tài liệu cho nền tảng phần mềm dạng dịch vụ. Để hiện thực hóa điều này, hệ thống tích hợp bộ công cụ @google/generative-ai nhằm thiết lập kết nối an toàn với máy chủ Google. Trí tuệ nhân tạo được thiết lập một câu lệnh hệ thống đặc thù, yêu cầu mô hình đóng vai trò như một chuyên gia viết tài liệu kỹ thuật dày dặn kinh nghiệm. Quá trình sinh tài liệu diễn ra khi ứng dụng chuyển giao cấu trúc cây thư mục đã quét và nội dung của các tệp cấu hình quan trọng làm dữ liệu ngữ cảnh đầu vào. Dựa trên khối dữ liệu này, AI sẽ tự động phân tích và xuất ra một tệp văn bản hoàn chỉnh với các hạng mục tiêu chuẩn như công nghệ sử dụng, kiến trúc tổng thể, hướng dẫn cài đặt và sử dụng dự án. Hơn thế nữa, dự án áp dụng kỹ thuật xử lý luồng kết quả từ nền tảng Gemini, cho phép văn bản được hiển thị ngay lập tức và liên tục lên không gian làm việc trực quan của lập trình viên
+2.4.2. GitHub REST API
+Giao diện lập trình ứng dụng trạng thái đại diện của GitHub là một hệ thống các điểm cuối kết nối mạnh mẽ, cho phép các ứng dụng bên thứ ba tương tác trực tiếp với nền tảng lưu trữ mã nguồn mở lớn nhất thế giới. Dựa trên kiến trúc RESTful tiêu chuẩn và định dạng dữ liệu JSON, giao diện này cung cấp khả năng truy xuất, quản lý và điều khiển gần như toàn bộ các tài nguyên trên hệ sinh thái GitHub, từ thông tin định danh người dùng, danh sách kho lưu trữ cho đến cấu trúc cây tệp tin chi tiết. Điểm ưu việt của công cụ này nằm ở việc cho phép các hệ thống phần mềm trích xuất siêu dữ liệu và đọc nội dung mã nguồn từ xa một cách chọn lọc, giúp loại bỏ hoàn toàn yêu cầu phải sao chép toàn bộ dự án về máy chủ cục bộ, qua đó tối ưu hóa đáng kể băng thông mạng và tài nguyên tính toán của hệ thống.
+Trong hệ thống OpenDoc AI, GitHub REST API đóng vai trò là công cụ thu thập dữ liệu cốt lõi nhằm cung cấp thông tin mã nguồn làm ngữ cảnh cho trí tuệ nhân tạo. Ngay khi người dùng cung cấp đường dẫn kho lưu trữ công khai, hệ thống sẽ tự động bóc tách thông tin định danh và gọi đến điểm cuối Trees API để quét toàn bộ sơ đồ cấu trúc thư mục. Từ sơ đồ thư mục thu thập được, ứng dụng áp dụng thuật toán lọc thông minh để loại bỏ các thư mục rác (như node_modules, .git) và chỉ tiến hành tải về nội dung của các tệp tin mang tính chất trọng tâm của kiến trúc (như package.json, Dockerfile, các tệp tin cấu hình). Toàn bộ dữ liệu đã qua tinh giản này sau đó được tổng hợp để làm ngữ cảnh đầu vào chuẩn xác cho phân hệ AI sinh tài liệu đặc tả
+2.5. Công nghệ triển khai và vận hành
+2.5.1. Droplet DigitalOcean
+DigitalOcean Droplet là một dịch vụ VPS cung cấp nền tảng tính toán linh hoạt và có khả năng mở rộng trên môi trường điện toán đám mây. Khác với các mô hình lưu trữ chia sẻ truyền thống, Droplet cho phép các nhà phát triển toàn quyền cấu hình hệ điều hành, cài đặt phần mềm và quản lý tài nguyên phần cứng (CPU, RAM, băng thông) thông qua quyền truy cập cấp quản trị viên cao nhất. Với ưu điểm về giao diện quản trị trực quan, cơ sở hạ tầng mạng tốc độ cao và chi phí vận hành tối ưu, Droplet đã trở thành một trong những giải pháp hạ tầng được ưa chuộng hàng đầu để triển khai các ứng dụng web phức tạp, các dịch vụ API hoặc kiến trúc hệ thống vi dịch vụ.
+Trong khuôn khổ triển khai dự án OpenDoc AI, DigitalOcean Droplet được lựa chọn làm môi trường máy chủ ảo để vận hành nền tảng trên thực tế. Máy chủ ảo này đóng vai trò là hạ tầng phần cứng trực tiếp lưu trữ và thực thi các vùng chứa mã nguồn đã được đóng gói nhằm tối ưu hóa dung lượng. Việc sử dụng máy chủ riêng biệt giúp dự án chủ động thiết lập máy chủ web Nginx làm proxy ngược, qua đó tiếp nhận an toàn các yêu cầu từ mạng phân phối nội dung Cloudflare và chuyển tiếp chính xác vào môi trường ứng dụng đang chạy. Đồng thời, việc có toàn quyền kiểm soát hệ thống cho phép dự án trực tiếp cấu hình các quy tắc tường lửa nhằm kiểm soát nghiêm ngặt các cổng mạng trọng yếu, đảm bảo kiến trúc phần mềm dạng dịch vụ luôn hoạt động xuyên suốt, tốc độ phản hồi cao và đạt tiêu chuẩn bảo mật trên môi trường Internet. 
+2.5.2. Nền tảng ảo hóa Docker
+Docker là một nền tảng mã nguồn mở chuyên cung cấp các công cụ để đóng gói, phân phối và thực thi ứng dụng bên trong các môi trường hoàn toàn cô lập được gọi là các vùng chứa. Khác với công nghệ máy ảo truyền thống đòi hỏi phải ảo hóa toàn bộ một hệ điều hành phần cứng cồng kềnh, các vùng chứa Docker chia sẻ chung nhân hệ điều hành với máy chủ vật lý, giúp chúng có dung lượng vô cùng nhẹ, tốc độ khởi động gần như tức thì và tối ưu hóa triệt để tài nguyên hệ thống. Bằng cách đóng gói toàn bộ mã nguồn ứng dụng cùng với các thư viện phụ thuộc, tệp cấu hình và môi trường thực thi vào một khối thống nhất, Docker giải quyết triệt để bài toán xung đột môi trường, đảm bảo ứng dụng luôn hoạt động ổn định và nhất quán cho dù được triển khai trên máy tính cá nhân hay trên các máy chủ đám mây phức tạp.
+Đối với quy trình vận hành dự án OpenDoc AI, nền tảng Docker đóng vai trò là công cụ cốt lõi để hướng dẫn và hiện thực hóa luồng triển khai ứng dụng lên môi trường máy chủ ảo. Ứng dụng được thiết lập chạy ổn định trên nền tảng hệ điều hành Debian của máy chủ. Hệ thống áp dụng chiến lược xây dựng đa giai đoạn bên trong tệp cấu hình Dockerfile , kết hợp với chế độ xuất bản độc lập của khung làm việc Next.js. Điều này giúp giảm kích thước vùng chứa đầu ra một cách đáng kể bằng cách chỉ bao gồm các tệp cần thiết để chạy ứng dụng. Bên cạnh đó, dự án còn tích hợp công cụ điều phối thông qua tệp docker-compose.yml nhằm quản lý các vùng chứa một cách dễ dàng và đồng bộ. Nhờ kiến trúc tập trung này, các thông số môi trường bảo mật và lệnh khởi tạo được tự động hóa hoàn toàn, tạo tiền đề vững chắc cho việc duy trì và nâng cấp hệ thống phần mềm dạng dịch vụ trong tương lai.
+2.5.3. Web server nginx
+Nginx là một máy chủ web mã nguồn mở hiệu năng cao, được sử dụng rộng rãi trên toàn cầu với các vai trò phổ biến như máy chủ proxy ngược, bộ cân bằng tải và bộ nhớ đệm HTTP. Điểm làm nên sức mạnh của Nginx là kiến trúc xử lý bất đồng bộ hướng sự kiện, cho phép hệ thống quản lý hàng chục nghìn kết nối đồng thời với mức tiêu thụ tài nguyên phần cứng cực kỳ thấp. Khi đóng vai trò là một proxy ngược, Nginx hoạt động như một lá chắn trung gian vững chắc nằm giữa các yêu cầu truy cập từ mạng Internet và máy chủ ứng dụng nội bộ. Nó không chỉ giúp phân luồng giao thông mạng và hỗ trợ mã hóa kết nối bảo mật (SSL/TLS) mà còn che giấu hoàn toàn cấu trúc liên kết mạng cũng như các cổng dịch vụ nhạy cảm của hệ thống bên trong khỏi các nguy cơ tấn công trực tiếp.
+Trong mô hình triển khai thực tế của hệ thống OpenDoc AI, Nginx được cài đặt trực tiếp trên môi trường máy chủ ảo và cấu hình để đảm nhiệm vai trò proxy ngược chiến lược. Hệ thống máy chủ web này có nhiệm vụ tiếp nhận toàn bộ các luồng yêu cầu mạng từ trình duyệt của người dùng cuối — sau khi đã được định tuyến qua mạng phân phối nội dung Cloudflare — và chuyển tiếp chúng một cách an toàn vào ứng dụng Next.js đang vận hành độc lập bên trong vùng chứa Docker ở cổng nội bộ 3000. 
+CHƯƠNG 3: PHÂN TÍCH VÀ THIẾT KẾ HỆ THỐNG
+3.1. Kiến trúc hệ thống tổng thể
+Hình 3-1: Kiến trúc hệ thống Opendoc AI
+Kiến trúc tổng thể của hệ thống được tổ chức theo mô hình phân tầng chặt chẽ, bắt đầu từ tầng người dùng tích hợp Next.js, Tailwind CSS và thư viện giả lập dòng lệnh xterm.js nhằm tiếp nhận tương tác trực quan. Toàn bộ lưu lượng truy cập từ phía máy khách được luân chuyển qua tầng hạ tầng mạng Cloudflare để bảo mật và định tuyến, trước khi đi vào hệ điều hành máy chủ ảo Digital Ocean. Tại tầng máy chủ, Nginx đóng vai trò là một Reverse Proxy đảm nhiệm việc giải mã SSL (cổng 443) và phân luồng tín hiệu: các yêu cầu HTTP tiêu chuẩn được chuyển tiếp đến máy chủ Next.js (cổng 3000), trong khi các luồng thời gian thực được điều hướng tới Socket.io Node thông qua giao thức WebSocket. Môi trường xử lý cốt lõi này được cô lập an toàn bên trong nền tảng ảo hóa Docker; tuy nhiên, tiến trình Socket.io vẫn thiết lập được kênh giao tiếp ngược ra hệ điều hành chủ thông qua giao thức SSH (cổng 22) để đáp ứng chức năng điều khiển từ xa. Song song đó, máy chủ Next.js đóng vai trò trung tâm điều phối, trực tiếp giao tiếp với các dịch vụ ngoại vi bao gồm GitHub API (trích xuất mã nguồn), Gemini API (tạo sinh tài liệu) và Supabase (quản lý định danh và thao tác dữ liệu CRUD), tạo nên một chu trình vận hành khép kín, bảo mật và tối ưu hiệu suất.
+3.2. Phân tích yêu cầu chức năng
+Bảng 3-1: Bảng phân tích các chức năng chính của dự án
+STT
+Chức năng
+Mô tả
+Yêu cầu chi tiết
+1
+Xác thực và phân quyền người dùng
+1.1
+Đăng nhập / Đăng ký (SSO)
+Cho phép người dùng xác thực bằng tài khoản GitHub
+- Tích hợp Supabase Auth với GitHub OAuth.
+- Tự động cấp quyền truy cập và khởi tạo bản ghi trong bảng profiles.
+- Lưu trữ phiên đăng nhập an toàn qua Cookie/JWT.
+- Điều hướng đến Dashboard sau khi thành công.
+1.2
+Đăng xuất
+Kết thúc phiên làm việc hiện tại
+- Hủy phiên kết nối từ phía Supabase.
+- Xóa trạng thái xác thực cục bộ.
+- Điều hướng người dùng về trang chủ.
+1.3
+Phân quyền và Bảo vệ tuyến đường
+Kiểm soát truy cập dựa trên vai trò (RBAC)
+- Middleware Next.js kiểm tra trạng thái xác thực trên mọi lượt truy cập.
+- Phân tách rõ ràng luồng truy cập của User và Admin.
+- Tự động chặn và điều hướng nếu truy cập trái phép.
+2
+Quản lý không gian dự án (CRUD)
+2.1
+Xem danh sách dự án
+Hiển thị các dự án tài liệu đã khởi tạo
+- Giao diện dạng lưới hoặc danh sách.
+- Hiển thị thông tin: Tên repository, thời gian tạo, trạng thái tài liệu.
+- Áp dụng RLS (Row Level Security) đảm bảo chỉ thấy dự án của chính mình.
+2.2
+Khởi tạo dự án mới
+Nhập thông tin để hệ thống chuẩn bị sinh tài liệu
+- Form nhập đường dẫn hợp lệ của kho mã nguồn GitHub.
+- Xác thực định dạng URL và quyền truy cập kho mã nguồn.
+- Khởi tạo bản ghi mới trong bảng projects.
+2.3
+Xóa dự án
+Hủy bỏ dự án không còn sử dụng
+- Hiển thị hộp thoại yêu cầu xác nhận thao tác.
+- Xóa toàn bộ dữ liệu liên quan trong bảng projects và documents.
+3
+Tự động hóa và Trí tuệ nhân tạo
+3.1
+Thu thập mã nguồn
+Bóc tách ngữ cảnh từ GitHub
+- Gọi GitHub REST API để lấy sơ đồ cây thư mục và nội dung các tệp tin cấu hình trọng yếu.
+- Lọc và loại bỏ các thư mục rác (như node_modules, .git) để tối ưu hóa token.
+3.2
+Sinh tài liệu tự động
+Gọi mô hình AI để phân tích và viết tệp README.md
+- Gửi ngữ cảnh mã nguồn kèm Prompt đặc tả kỹ thuật đến Google Gemini API.
+- Xử lý luồng dữ liệu trả về theo thời gian thực.
+- Cấu trúc đầu ra bắt buộc tuân thủ định dạng Markdown chuẩn.
+4
+Không gian làm việc và Soạn thảo 
+4.1
+Trình soạn thảo Markdown
+Cung cấp công cụ chỉnh sửa tài liệu trực quan
+- Giao diện chia đôi màn hình (Split-pane) chuyên nghiệp.
+- Cửa sổ trái: Gõ văn bản Markdown (hỗ trợ đánh dấu cú pháp - syntax highlighting).
+- Cửa sổ phải: Kết xuất giao diện HTML tương ứng theo thời gian thực.
+4.2
+Lưu trữ tài liệu
+Lưu các thay đổi do người dùng chỉnh sửa thủ công
+- Cung cấp nút hoặc phím tắt (Ctrl+S) để lưu trạng thái.
+- Cập nhật nội dung văn bản vào bảng documents trên cơ sở dữ liệu Supabase.
+5
+Quản trị hệ thống 
+5.1
+Quản lý cấu hình API Keys
+Cập nhật các khóa dịch vụ bên thứ ba
+- Giao diện CRUD dành riêng cho Admin để thêm, sửa, xóa các mã khóa GitHub API và Gemini API.
+- Kiểm tra được trạng thái sử dụng của Gemini API.
+- Dữ liệu khóa phải được bảo vệ bằng chính sách RLS khắt khe.
+5.2
+Web Terminal 
+Điều khiển VPS trực tiếp trên nền tảng trình duyệt
+- Giao diện dòng lệnh giả lập bằng thư viện xterm.js.
+- Kết nối WebSocket thời gian thực thông qua Socket.io.
+- Tích hợp ssh2 để thực thi lệnh trực tiếp trên hệ điều hành Debian qua cổng 22.
+3.3. Sơ đồ use-case
+3.3.1. Chức năng Đăng ký/Đăng nhập 
+Sơ đồ Use Case "Chức năng Xác thực và Phân quyền" mô tả module định danh người dùng của nền tảng OpenDoc AI. Sơ đồ này bao gồm hai tác nhân chính là Người dùng (Lập trình viên) và Quản trị viên (Admin), tương tác với ba use case cốt lõi:
+UC01 - Đăng nhập/Đăng ký (GitHub SSO): cho phép người dùng xác thực nhanh chóng và tự động khởi tạo tài khoản thông qua việc liên kết với nền tảng mã nguồn mở GitHub (sử dụng dịch vụ Supabase Auth).
+UC02 - Đăng xuất: kết thúc phiên làm việc an toàn, xóa bỏ token xác thực và điều hướng người dùng trở về trang chủ.
+UC03 - Bảo vệ và phân quyền tuyến đường: tự động kiểm tra trạng thái đăng nhập và kiểm tra vai trò của tài khoản trước khi cấp quyền truy cập vào bảng điều khiển. Giao diện của quản trị viên và người dùng về cơ bản là giống nhau. Điểm khác biệt là giao diện của quản trị viên có thêm nút quản lý các key hệ thống thống và nút truy cập vào web terminal.
+Hình 3-2: Sơ đồ use case xác thực và phân quyền
+3.3.2. Chức năng Quản lý Dự án 
+Sơ đồ Use Case "Chức năng Quản lý Dự án" mô tả vòng đời và các thao tác kiểm soát không gian lưu trữ tài liệu của nền tảng OpenDoc AI. Tác nhân duy nhất tham gia vào module này là Người dùng (Đã qua xác thực), tương tác với bốn use case cốt lõi:
+UC04 - Xem danh sách dự án: Cho phép người dùng xem toàn bộ các dự án đã khởi tạo trên trang tổng quan. Quá trình truy xuất dữ liệu này được bảo vệ bởi chính sách RLS (Row Level Security) trên Supabase, đảm bảo người dùng chỉ nhìn thấy dữ liệu của chính mình.
+UC05 - Khởi tạo dự án mới: Cho phép người dùng thêm một dự án tài liệu mới vào hệ thống thông qua việc cung cấp đường dẫn (URL) của kho chứa mã nguồn trên GitHub.
+UC06 - Kiểm tra hợp lệ kho mã nguồn: Là một tiến trình hệ thống chạy ngầm. Khi người dùng thực hiện khởi tạo dự án, hệ thống bắt buộc phải kiểm tra xem URL GitHub có tồn tại hay không và quyền truy cập có hợp lệ không trước khi lưu vào cơ sở dữ liệu.
+UC07 - Xóa dự án: Cho phép người dùng dọn dẹp không gian làm việc bằng cách xóa các dự án không còn nhu cầu sử dụng, kèm theo cơ chế hiển thị hộp thoại xác nhận để tránh việc xóa nhầm dữ liệu.
+Hình 3-3: Sơ đồ use case chức năng quản lý dự án
+3.3.3. Chức năng Quản lý và Chỉnh sửa Tài liệu 
+Sơ đồ Use Case "Chức năng Quản lý và Chỉnh sửa Tài liệu" mô tả quy trình cốt lõi trong việc tạo sinh và hoàn thiện nội dung kỹ thuật. Module này tập trung vào sự phối hợp giữa trí tuệ nhân tạo và thao tác thủ công của Người dùng, bao gồm bốn use case chính:
+UC08 - Xem nội dung tài liệu: Cho phép người dùng truy cập và đọc nội dung tài liệu (Markdown) đã được lưu trữ trong cơ sở dữ liệu của dự án.
+UC09 - Soạn thảo và Chỉnh sửa: Cung cấp môi trường cho phép người dùng thay đổi, cập nhật nội dung tài liệu thủ công thông qua trình soạn thảo văn bản.
+UC10 - Sinh tài liệu tự động: Kích hoạt hệ thống gửi ngữ cảnh mã nguồn đến Google Gemini API để phân tích và tự động viết tệp README.md hoặc tài liệu kỹ thuật dựa trên cấu trúc dự án.
+UC11 - Xem trước thời gian thực: Là chức năng hỗ trợ hiển thị ngay lập tức kết quả kết xuất từ định dạng Markdown sang giao diện HTML trực quan. Chức năng này giúp người dùng kiểm soát định dạng văn bản trong suốt quá trình soạn thảo.
+Hình 3-4: Sơ đồ use case chức năng chỉnh sửa tài liệu
+3.3.4. Chức năng Thu thập mã nguồn và Trích xuất AI 
+Sơ đồ Use Case "Chức năng Thu thập mã nguồn và Trích xuất AI" mô tả các tiến trình giao tiếp ngầm và luồng tự động hóa cốt lõi của nền tảng OpenDoc AI. Điểm đặc biệt của sơ đồ này là tác nhân phụ đại diện cho các hệ thống bên ngoài. Tác nhân chính là Người dùng sẽ tương tác với hệ thống để kích hoạt chuỗi xử lý, bao gồm các use case:
+UC12 - Yêu cầu tạo sinh tài liệu: Cho phép người dùng kích hoạt luồng xử lý AI cho một kho mã nguồn cụ thể. Đây là điểm bắt đầu của toàn bộ chu trình.
+UC13 - Đồng bộ mã nguồn: Hệ thống tự động thiết lập kết nối và giao tiếp với hệ thống bên ngoài (GitHub API) để truy xuất sơ đồ cây thư mục và nội dung các tệp tin trọng yếu.
+UC14 - Tiền xử lý dữ liệu: Một tiến trình nội bộ bắt buộc nhằm quét và loại bỏ các thư mục rác (như node_modules, .git, v.v.) nhằm tối ưu hóa dung lượng trước khi xử lý.
+UC15 - Trích xuất AI: Quá trình hệ thống đóng gói dữ liệu đã làm sạch cùng với Prompt đặc tả, sau đó giao tiếp với hệ thống bên ngoài (Gemini API) để phân tích và trả về kết quả dưới định dạng Markdown.
+Hình 3-5: Sơ đồ use case chức năng thu thập mã nguồn và trích xuất AI
+3.3.5. Chức năng quản trị hệ thống
+Sơ đồ Use Case "Chức năng Quản trị hệ thống" mô tả phân hệ có đặc quyền cao nhất của nền tảng OpenDoc AI, được thiết kế chuyên biệt để duy trì sự ổn định và thiết lập cấu hình lõi của ứng dụng. Tác nhân duy nhất trong module này là Quản trị viên, tương tác với ba use case cốt lõi:
+UC16 - Quản lý cấu hình API Keys: Cung cấp giao diện an toàn để quản trị viên thực hiện các thao tác (Thêm, Sửa, Xóa) đối với các mã khóa dịch vụ nhạy cảm như GitHub API và Gemini API. Dữ liệu này được bảo mật nghiêm ngặt bằng các chính sách cấp cơ sở dữ liệu.
+UC17 - Điều khiển máy chủ qua Web Terminal: Cho phép quản trị viên truy cập vào giao diện dòng lệnh giả lập trực tiếp trên trình duyệt để giám sát tài nguyên và vận hành ứng dụng mà không cần thông qua phần mềm bên thứ ba.
+UC18 - Thiết lập kết nối và Thực thi lệnh (SSH): Tiến trình hệ thống chạy ngầm bắt buộc, chịu trách nhiệm mã hóa và chuyển đổi luồng dữ liệu giao tiếp thành các lệnh SSH chuẩn mực để ra lệnh trực tiếp cho hệ điều hành máy chủ.
+Hình 3-6: Sơ đồ use case chức năng quản trị hệ thống OpenDoc AI
+3.4. Thiết kế cơ sở dữ liệu
+3.4.1. Bảng profiles 
+Bảng profiles lưu trữ thông tin hồ sơ cá nhân và quyền hạn của người dùng trên hệ thống OpenDoc AI. Thuộc tính id được liên kết trực tiếp với định danh của bảng auth.users do Supabase Authentication tự động sinh ra khi người dùng đăng nhập. Mỗi người dùng có một id duy nhất trong toàn hệ thống, đóng vai trò là khóa chính.
+Bảng 3-2: Bảng các thuộc tính của profiles
+Tên thuộc tính
+Kiểu dữ liệu
+Mô tả
+Ràng buộc
+id
+uuid
+ID người dùng
+Khóa chính, Khóa ngoại tham chiếu auth.users.id
+username
+text
+Tên định danh của người dùng
+Bắt buộc, duy nhất
+avatar_url
+text
+URL ảnh đại diện
+Tùy chọn
+updated_at
+timestamptz
+Thời gian cập nhật hồ sơ cuối cùng
+Tự động tạo
+is_admin
+bool
+Cờ xác định quyền quản trị viên
+Mặc định: false
+Ví dụ một bản ghi trong bảng profiles:
+{
+ "id": "a1b2c3d4-5678-90ef-ghij-klmnopqrstuv",
+ "username": "dev_opendoc",
+ "avatar_url": "https://avatars.githubusercontent.com/u/12345678?v=4",
+ "updated_at": "2026-05-25T10:30:00Z",
+ "is_admin": false
+}
+3.4.2. Bảng projects 
+Bảng projects lưu trữ thông tin cấu hình của các dự án tài liệu do người dùng khởi tạo. Mỗi dự án gắn liền với một kho mã nguồn trên GitHub và thuộc sở hữu của một cá nhân cụ thể.
+Bảng 3-3: Bảng các thuộc tính của projects
+Tên thuộc tính
+Kiểu dữ liệu
+Mô tả
+Ràng buộc
+id
+uuid
+ID dự án
+Khóa chính, tự động tạo
+user_id
+uuid
+ID người dùng sở hữu dự án
+Khóa ngoại tham chiếu profiles.id, bắt buộc
+repo_url
+text
+Đường dẫn URL của kho mã nguồn
+Bắt buộc
+repo_name
+text
+Tên kho mã nguồn
+Bắt buộc
+description
+text
+Mô tả ngắn gọn về dự án
+Tùy chọn
+created_at
+timestamptz
+Thời gian khởi tạo dự án
+Tự động tạo (now())
+Ví dụ một bản ghi trong projects:
+{
+ "id": "p9x8y7z6-5432-10ab-cdef-ghijklmnopqr",
+ "user_id": "a1b2c3d4-5678-90ef-ghij-klmnopqrstuv",
+ "repo_url": "https://github.com/user/opendoc-core",
+ "repo_name": "opendoc-core",
+ "description": "Lõi xử lý AI cho nền tảng OpenDoc",
+ "created_at": "2026-05-25T11:00:00Z"
+}
+3.4.3. Bảng documents
+Bảng documents là nơi lưu trữ trực tiếp nội dung văn bản Markdown được hệ thống AI sinh ra hoặc do người dùng tự soạn thảo. Mỗi tài liệu phụ thuộc chặt chẽ vào một dự án duy nhất.
+Bảng 3-4: Bảng các thuộc tính của documents
+Tên thuộc tính
+Kiểu dữ liệu
+Mô tả
+Ràng buộc
+id
+uuid
+ID tài liệu
+Khóa chính, tự động tạo
+project_id
+uuid
+ID dự án chứa tài liệu
+Khóa ngoại tham chiếu projects.id, bắt buộc
+content
+text
+Nội dung tài liệu định dạng Markdown
+Tùy chọn
+status
+text
+Trạng thái xử lý của tài liệu
+Bắt buộc (VD: "draft", "generated")
+created_at
+timestamptz
+Thời gian tạo hoặc sinh tài liệu
+Tự động tạo (now())
+Ví dụ một bản ghi trong bảng documents:
+{
+ "id": "d1e2f3g4-5678-90ab-cdef-1234567890ab",
+ "project_id": "p9x8y7z6-5432-10ab-cdef-ghijklmnopqr",
+ "content": "# OpenDoc Core\n\nĐây là tài liệu hướng dẫn...",
+ "status": "generated",
+ "created_at": "2026-05-25T11:05:00Z"
+}
+3.4.4 Bảng admin_configs
+Bảng admin_configs đóng vai trò lưu trữ các thiết lập cấu hình hệ thống và thông tin xác thực nhạy cảm (API Keys, SSH Credentials) của các dịch vụ bên thứ ba. Bảng này thường được sử dụng bởi những tài khoản có quyền quản trị (Admin) để cấu hình môi trường vận hành cốt lõi (Gemini, Supabase, VPS) cho toàn bộ ứng dụng. Thuộc tính user_id giúp xác định người dùng nào đã thiết lập cấu hình này.
+Bảng 3-5: Bảng các thuộc tính của admin_configs
+Tên thuộc tính
+Kiểu dữ liệu
+Mô tả
+Ràng buộc
+id
+uuid
+ID cấu hình
+Khóa chính, tự động tạo
+user_id
+uuid
+ID người dùng quản lý cấu hình
+Khóa ngoại tham chiếu auth.users.id, bắt buộc
+gemini_api_key
+text
+Khóa bí mật gọi dịch vụ Google Gemini API
+Tùy chọn, cần mã hóa bảo mật
+supabase_url
+text
+Đường dẫn URL của dự án Supabase
+Tùy chọn
+supabase_anon_key
+text
+Khóa xác thực ẩn danh của Supabase
+Tùy chọn
+vps_ssh_host
+text
+Địa chỉ IP hoặc Hostname của máy chủ ảo
+Tùy chọn
+vps_ssh_user
+text
+Tên tài khoản đăng nhập SSH (VD: root)
+Tùy chọn
+vps_ssh_key
+text
+Khóa xác thực hoặc mật khẩu SSH
+Tùy chọn, cần mã hóa bảo mật
+updated_at
+timestamptz
+Thời gian cập nhật thiết lập cuối cùng
+Tự động tạo
+Ví dụ một bản ghi trong bảng user_configs:
+{
+ "id": "c1a2b3c4-d5e6-7890-1234-567890abcdef",
+ "user_id": "a1b2c3d4-5678-90ef-ghij-klmnopqrstuv",
+ "gemini_api_key": "AIzaSyB-xxxx-xxxxxxxxxxxxxxxxxxxx",
+ "supabase_url": "https://xyz.supabase.co",
+ "supabase_anon_key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+ "vps_ssh_host": "104.248.xxx.xxx",
+ "vps_ssh_user": "root",
+ "vps_ssh_key": "-----BEGIN RSA PRIVATE KEY-----\nMIIE...",
+ "updated_at": "2026-05-25T11:20:00Z"
+}
+3.4.5 Bảng user_usage
+Bảng user_usage được thiết kế để theo dõi và kiểm soát tần suất sử dụng tài nguyên hệ thống của từng cá nhân, đặc biệt là các tính năng tiêu tốn nhiều chi phí như việc gọi API trí tuệ nhân tạo. Việc lưu trữ dữ liệu này giúp hệ thống quản lý hạn mức hiệu quả.
+Bảng 3-6: Bảng các thuộc tính của user_usage
+Tên thuộc tính
+Kiểu dữ liệu
+Mô tả
+Ràng buộc
+id
+uuid
+ID bản ghi mức sử dụng
+Khóa chính, tự động tạo
+user_id
+uuid
+ID người dùng
+Khóa ngoại tham chiếu auth.users.id, bắt buộc
+usage_count
+int4
+Số lượt đã sử dụng dịch vụ (VD: số lần gọi AI)
+Mặc định: 0
+last_reset
+timestamptz
+Thời điểm hệ thống làm mới lại hạn mức
+Tự động tạo
+Ví dụ một bản ghi trong bảng user_usage:
+{
+ "id": "u9v8w7x6-y5z4-3210-abcd-ef0123456789",
+ "user_id": "a1b2c3d4-5678-90ef-ghij-klmnopqrstuv",
+ "usage_count": 15,
+ "last_reset": "2026-05-01T00:00:00Z"
+}
+3.4.6 Bảng analytics
+Bảng analytics là một bảng độc lập, có chức năng tổng hợp và lưu trữ các số liệu thống kê vĩ mô của toàn bộ hệ thống OpenDoc AI. Dữ liệu từ bảng này cung cấp cái nhìn tổng quan về hiệu suất hoạt động, phục vụ trực tiếp cho việc hiển thị biểu đồ trên giao diện Dashboard của Quản trị viên.
+Bảng 3-7: Bảng các thuộc tính của analytics
+Tên thuộc tính
+Kiểu dữ liệu
+Mô tả
+Ràng buộc
+id
+int4
+ID bản ghi phân tích
+Khóa chính, tự động tăng
+visit_count
+int4
+Tổng số lượt truy cập vào hệ thống
+Mặc định: 0
+ai_generation_count
+int4
+Tổng số lần hệ thống tạo sinh tài liệu thành công
+Mặc định: 0
+last_updated
+timestamptz
+Thời điểm cập nhật số liệu gần nhất
+Tự động tạo (now())
+Ví dụ một bản ghi trong bảng analytics:
+{
+ "id": 1,
+ "visit_count": 14520,
+ "ai_generation_count": 348,
+ "last_updated": "2026-05-25T11:30:00Z"
+}
+3.4.7. Sơ đồ mối quan hệ giữa các bảng
+Hình 3-7: Lược đồ quan hệ dự án
+Sơ đồ thực thể liên kết của hệ thống OpenDoc AI được thiết kế xoay quanh định danh trung tâm auth.users.id, đóng vai trò là gốc tham chiếu bảo mật cho toàn bộ kiến trúc dữ liệu. Từ gốc định danh này, dữ liệu phân nhánh trực tiếp đến các bảng profiles, user_configs và user_usage nhằm quản lý toàn diện thông tin cá nhân, thiết lập cấu hình môi trường và kiểm soát tài nguyên của từng tài khoản. Về luồng lưu trữ nghiệp vụ cốt lõi, bảng profiles thiết lập mối quan hệ một-nhiều với projects, và mỗi dự án tiếp tục ràng buộc một-nhiều với bảng documents để tạo thành một hệ sinh thái quản lý tài liệu phân cấp chặt chẽ. Tách biệt hoàn toàn khỏi luồng dữ liệu định danh, bảng analytics hoạt động như một thực thể độc lập chuyên trách việc lưu vết và tổng hợp các chỉ số đo lường hiệu suất vĩ mô của nền tảng.
+3.4.8. Các RLS trong dự án 
+a) Users can view own profile (Lệnh áp dụng: SELECT / Trên bảng profiles)
+Chính sách này chỉ cho phép người dùng đọc và trích xuất dữ liệu hồ sơ của chính họ. Hệ thống sẽ tự động đối chiếu mã định danh của phiên đăng nhập hiện tại (thường là auth.uid()) với trường khóa chính id trong bảng. Nếu trùng khớp, dữ liệu mới được trả về, qua đó ngăn chặn triệt để hành vi xem trộm thông tin tài khoản của người khác.
+b) Users can update own profile (Lệnh áp dụng: UPDATE / Trên bảng profiles)
+Chính sách này cấp quyền cho người dùng được phép thay đổi thông tin (như tên định danh, ảnh đại diện) trên chính bản ghi hồ sơ của họ. Cơ chế kiểm tra quyền sở hữu được áp dụng nghiêm ngặt ở mức cơ sở dữ liệu để đảm bảo không một ai (kể cả những người dùng hợp lệ khác) có thể can thiệp và chỉnh sửa chéo dữ liệu của nhau.
+c) Users can manage own projects (Lệnh áp dụng: ALL / Trên bảng projects)
+Thay vì chia nhỏ thành từng quyền lẻ, chính sách này cấp toàn quyền thao tác (bao gồm Khởi tạo - INSERT, Đọc - SELECT, Cập nhật - UPDATE, và Xóa - DELETE) cho người dùng đối với các dự án do chính họ sở hữu. Cơ chế này hoạt động dựa trên việc kiểm chứng ràng buộc: giá trị tại trường user_id của dự án phải trùng khớp tuyệt đối với mã định danh của người dùng đang gửi yêu cầu. Cấu hình này giúp cô lập hoàn toàn dữ liệu dự án giữa các tài khoản, tạo ra một môi trường quản lý an toàn và độc lập.
+CHƯƠNG 4: XÂY DỰNG ỨNG DỤNG
+4.1. Môi trường phát triển
+4.1.1. IDE - Visual Studio Code
+Visual Studio Code (VS Code) là một môi trường tích hợp phát triển (IDE) miễn phí, mã nguồn mở được phát triển bởi Microsoft. VS Code được lựa chọn làm IDE chính cho dự án nhờ vào các ưu điểm vượt trội như nhẹ, nhanh, hỗ trợ đa nền tảng (Windows, macOS, Linux), và có hệ sinh thái tiện ích mở rộng phong phú.
+Các tính năng nổi bật của VS Code:
+IntelliSense: Tự động gợi ý mã nguồn, gợi ý tham số hàm, và xem nhanh thông tin khi lập trình.
+Integrated Terminal: Terminal tích hợp sẵn, hỗ trợ chạy lệnh npm, git ngay trong VS Code
+Git Integration: Quản lý git trực tiếp trong VS Code
+4.1.2. Git - Công cụ quản lý mã nguồn
+Git là hệ thống quản lý phiên bản phân tán (Distributed Version Control System) được sử dụng để theo dõi sự thay đổi trong mã nguồn trong suốt quá trình phát triển phần mềm. 
+Chức năng chính trong dự án: 
+Version tracking: Lưu trữ lịch sử thay đổi mã nguồn qua các commits 
+Backup: Mã nguồn được lưu trữ an toàn trên remote repository (GitHub)
+4.1.3. npm - Công cụ quản lý gói của NodeJS
+npm (Node Package Manager) là công cụ quản lý gói mặc định cho NodeJS và là hệ sinh thái thư viện JavaScript lớn nhất thế giới hiện tại.
+Một số chức năng chính:
+Dependency Management: Cài đặt và quản lý các thư viện bên thứ ba
+Script Runner: Chạy các scripts được định nghĩa trong tập tin package.json
+Version Control: Quản lý phiên bản của các thư viện bên thứ ba
+Các lệnh npm thường dùng trong dự án
+Bảng 4-1: Các lệnh npm thường dùng trong dự án
+Lệnh
+Chức năng
+Ví dụ sử dụng
+npm i
+Cài đặt tất cả thư viện phụ thuộc
+Chạy sau khi clone dự án từ Github
+npm i &lt;package&gt;
+Cài đặt một thư viện
+npm i google/generative-ai
+npm run dev
+Khởi động server phát triển
+Chạy ứng dụng ở chế độ phát triển
+npm run build
+Xây dựng bản hoàn thiện của phần mềm
+Tạo bản hoàn thiện để triển khai
+Cấu trúc tập tin package.json của dự án
+{
+  "name": "opendoc-ai",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "@supabase/auth-helpers-nextjs": "^0.15.0",
+    "@supabase/supabase-js": "^2.105.4",
+    "@uiw/react-md-editor": "^4.1.0",
+    "@xterm/addon-fit": "^0.11.0",
+    "@xterm/xterm": "^6.0.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.14.0",
+    "next": "16.2.6",
+    "next-themes": "^0.4.6",
+    "radix-ui": "^1.4.3",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "shadcn": "^4.7.0",
+    "socket.io": "^4.8.3",
+    "socket.io-client": "^4.8.3",
+    "ssh2": "^1.17.0",
+    "tailwind-merge": "^3.6.0",
+    "tw-animate-css": "^1.4.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "@tailwindcss/postcss": "^4",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@types/ssh2": "^1.15.5",
+    "@vitejs/plugin-react": "^6.0.2",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.6",
+    "jsdom": "^29.1.1",
+    "tailwindcss": "^4",
+    "typescript": "^5",
+    "vitest": "^4.1.6"
+  }
+}
+4.1.4. Docker - Công cụ ảo hóa môi trường triển khai
+Docker là nền tảng phần mềm mã nguồn mở tiên tiến cho phép các nhà phát triển đóng gói, phân phối và quản lý ứng dụng bên trong các môi trường ảo hóa độc lập được gọi là các thùng chứa. Đây là tiêu chuẩn công nghiệp hiện tại để triển khai các ứng dụng web lên máy chủ.
+Một số chức năng chính:
+Đóng gói môi trường: Đóng gói toàn bộ mã nguồn ứng dụng, các thư viện phụ thuộc và cấu hình hệ điều hành vào một thùng chứa duy nhất.
+Cô lập tiến trình: Vận hành ứng dụng trong các vùng chứa tách biệt hoàn toàn với nhau, giúp loại bỏ triệt để tình trạng xung đột tài nguyên hay phiên bản phần mềm trên cùng một máy chủ.
+Tính nhất quán: Đảm bảo mã nguồn ứng dụng luôn chạy chính xác và đồng nhất trên mọi môi trường, từ máy tính cá nhân của lập trình viên cho đến máy chủ vận hành thực tế.
+Các lệnh Docker thường dùng trong dự án:
+Bảng 4-2: Các lệnh docker thường dùng trong dự án
+Lệnh
+Chức năng
+Ví dụ sử dụng
+docker build -t &lt;image_name&gt; .
+Xây dựng thùng chứa của phần mềm
+Chạy để tạo bản đóng gói hoàn chỉnh của dự án dựa trên cấu hình tệp Dockerfile.
+docker run -p &lt;port&gt;:&lt;port&gt; &lt;image_name&gt;
+Khởi chạy một vùng chứa độc lập
+docker run -p 3000:3000 opendoc-ai (Chạy ứng dụng và ánh xạ ra cổng 3000 của máy chủ).
+docker compose up -d
+Khởi động đồng loạt các dịch vụ
+Chạy toàn bộ ứng dụng (web server, ứng dụng) ở chế độ ngầm (detached mode) trên máy chủ.
+docker compose down
+Dừng và dọn dẹp môi trường triển khai
+Dừng hoạt động và xóa các vùng chứa khi hệ thống cần bảo trì hoặc cập nhật phiên bản mới.
+4.2. Cấu trúc thư mục dự án
+4.2.1. Cấu trúc thư mục tổng quan
+opendoc-ai/
+├── app/
+│   ├── actions/
+│   ├── api/
+│   ├── auth/
+│   ├── dashboard/
+│   ├── login/
+│   ├── workspace/
+│   ├── favicon.ico
+│   ├── globals.css
+│   ├── layout.tsx
+│   └── page.tsx
+├── components/
+│   ├── ui/
+│   └── (các file UI components khác)
+├── lib/
+│   ├── gemini.ts
+│   ├── github.ts
+│   ├── supabase.ts
+│   ├── supabase-server.ts
+│   └── (các utilities khác)
+├── public/
+├── tests/
+├── components.json
+├── docker-compose.yml
+├── Dockerfile
+├── eslint.config.mjs
+├── middleware.ts
+├── next.config.ts
+├── package.json
+├── playwright.config.ts
+├── postcss.config.mjs
+├── socket-server.ts
+├── tsconfig.json
+├── vitest.config.ts
+└── README.md
+4.2.2. Bảng tổng hợp các thư mục chính
+Bảng 4-3: Bảng các thư mục chính trong dự án
+STT
+Thư mục
+Mục đích
+Ghi chú
+1
+app/
+Chứa cấu trúc định tuyến, các trang, giao diện và API backend.
+Sử dụng cơ chế App Router của Next.js 15+, bao gồm cả Server Actions (actions/) và API endpoints (api/).
+2
+components/
+Chứa các thành phần giao diện tái sử dụng trong dự án.
+Tách biệt các component chức năng của dự án và các UI component cơ sở (shadcn ui được lưu trong thư mục con ui/).
+3
+lib/
+Chứa các hàm tiện ích, logic nghiệp vụ và cấu hình kết nối các dịch vụ bên ngoài.
+Bao gồm tích hợp cơ sở dữ liệu (Supabase), AI (Gemini), GitHub API và các hàm hỗ trợ khác.
+4
+public/
+Lưu trữ các tài nguyên tĩnh như hình ảnh, biểu tượng (SVG), v.v.
+Các file tĩnh có thể truy cập công khai và trực tiếp từ trình duyệt web.
+5
+tests/
+Chứa các tệp, kịch bản kiểm thử tự động của dự án.
+Áp dụng framework Vitest cho Unit Test và Playwright cho End-to-End (E2E) Test.
+4.2.3. Danh sách trang và tuyến đường ứng với thư mục app/
+Bảng 4-4: Bảng các trang trong thư mục app
+STT
+Tập tin
+Đường dẫn
+Mô tả
+Cần xác thực
+1
+app/page.tsx
+/
+Trang chủ - Landing page giới thiệu
+Không
+2
+app/login/page.tsx
+/login
+Đăng nhập / Đăng ký tài khoản
+Không
+3
+app/dashboard/page.tsx
+/dashboard
+Tổng quan, quản lý danh sách tài liệu
+Có
+4
+app/workspace/page.tsx
+/workspace
+Không gian làm việc, soạn thảo và tích hợp AI
+Có
+4.2.4. Danh sách các service có trong dự án
+Bảng 4-5: Bảng danh sách các service của dự án
+Thư mục / Tập tin
+Chức năng
+Các hàm / Nghiệp vụ chính
+Phụ thuộc chính
+project.ts
+Quản lý nghiệp vụ thao tác dữ liệu với bảng dự án và tài liệu.
+saveProject(), saveDocument(), getDocumentByProjectId(), deleteProject() kiểm tra ủy quyền (Auth) và thao tác với Database.
+next/cache, Supabase
+app/api/
+(Route Handlers) Cung cấp cấu trúc API nội bộ xử lý AI tạo sinh ở Backend.
+/api/generate: Trung chuyển và stream dữ liệu từ mô hình AI, /api/analyze: Thu thập context về code
+next/server, Google Generative AI
+app/auth/
+Cung cấp luồng định tuyến và kiểm soát phiên làm việc cho người dùng
+/callback/route.ts: exchangeCodeForSession() thiết lập Cookie; /logout/route.ts: Hủy phiên hiện tại.
+Supabase Auth Helpers, next/headers
+lib/supabase.ts 
+Cấu hình, khởi tạo lớp giao tiếp với Database (Supabase Client).
+createClient() (Frontend) và getServerClient() (Backend) để cung cấp token, headers/cookies cho API DB.
+Supabase Client JS
+gemini.ts
+Cầu nối thực thi logic AI sinh nội dung (Tạo README.md).
+Khởi tạo model AI, generateDocumentationStream(): Gắn SYSTEM_PROMPT và stream dữ liệu text từ Model.
+Google Generative AI
+github.ts
+Tương tác trực tiếp API mã nguồn mở của GitHub.
+getRepoTree(): Đọc danh sách cấu trúc cây file/folder, getFileContent(): Trích xuất Text bên trong file.
+Fetch API, GitHub REST API
+lib/repo-utils.ts
+Tiện ích hỗ trợ phân tích kho lưu trữ.
+parseGitHubUrl(): Bóc tách Owner/Repo từ đường dẫn, processRepoTree(): Chuyển cấu trúc mã thành thông tin dễ đọc.
+JavaScript thuần
+socket-server.ts
+Máy chủ cầu nối cho WebSocket truyền/nhận giao thức SSH.
+io.on('connection'), lắng nghe kết nối SSH, truyền lệnh Client qua thư viện SSH, lắng nghe Stream và trả ngược.
+Socket.io, SSH2, dotenv
+components/terminal.tsx
+Xử lý hiển thị Terminal trực tiếp trên giao diện trình duyệt.
+Gửi terminal-input, nhận terminal-output qua hook, xử lý ngắt/kết nối lại Socket giả lập SSH.
+XTerm, XTerm Addon Fit, Socket.io Client
+4.3. Xây dựng các module chính
+4.3.1. Module xác thực và định danh người dùng
+Module xác thực là thành phần khởi đầu của hệ thống OpenDoc AI, chịu trách nhiệm định danh và khởi tạo hồ sơ người dùng. Module này được xây dựng dựa trên Supabase Authentication kết hợp với giao thức OAuth 2.0, cung cấp phương thức đăng nhập một chạm (SSO) an toàn thông qua nền tảng GitHub.
+Các chức năng chính:
+Đăng nhập/Đăng ký (GitHub SSO): Cho phép người dùng xác thực và tự động tạo tài khoản dựa trên thông tin từ hồ sơ GitHub.
+Đăng xuất: Kết thúc phiên làm việc an toàn và xóa bỏ các token xác thực cục bộ.
+Đồng bộ hồ sơ: Tự động trích xuất và lưu trữ các thông tin cơ bản (tên hiển thị, email, ảnh đại diện) vào bảng profiles.
+Quản lý trạng thái phiên: Duy trì trạng thái đăng nhập xuyên suốt nhờ cơ chế lưu trữ an toàn của Supabase.
+Bảng 4-6: Bảng các hàm quan trọng trong module xác thực và định danh người dùng
+Hàm
+Tham số
+Kiểu trả về
+Mục đích
+exchangeCodeForSession()
+code (string)
+Session | Error
+Đổi mã OTP lấy phiên sau khi đăng nhập qua OAuth.
+signOut()
+-
+void
+Đăng xuất người dùng, vô hiệu hóa session hiện tại.
+getUser()
+-
+User | null
+Lấy thông tin user (email, id) từ phiên làm việc trên server.
+getServerClient()
+-
+SupabaseClient
+Khởi tạo client database có quyền thao tác trực tiếp trên backend với token của user.
+Một số giao diện chính của module xác thực và định danh người dùng:
+Hình 4-1: Giao diện trang đăng nhập
+4.3.2. Module quản lý danh sách dự án
+Module quản lý danh sách dự án đóng vai trò như một bảng điều khiển trung tâm, nơi lập trình viên tổ chức và kiểm soát các kho tài liệu của mình. Module này tương tác trực tiếp với cơ sở dữ liệu PostgreSQL của Supabase và được bảo vệ nghiêm ngặt bởi các chính sách RLS (Row Level Security).
+Các chức năng chính:
+Khởi tạo dự án: Cho phép người dùng thêm dự án mới bằng cách cung cấp đường dẫn hợp lệ của kho mã nguồn trên GitHub.
+Xem danh sách dự án: Hiển thị tổng quan các dự án dưới dạng lưới kèm thông tin cơ bản (tên kho, ngày tạo).
+Xóa dự án: Cho phép dọn dẹp không gian làm việc và xóa toàn bộ tài liệu liên quan đến dự án đó.
+Đảm bảo người dùng chỉ có thể nhìn thấy và thao tác trên các dự án do chính họ sở hữu.
+Bảng 4-7: Bảng các hàm quan trọng trong module quản lý danh sách dự án
+Hàm
+Tham số
+Kiểu trả về
+Mục đích
+saveProject()
+data (repoUrl, repoName, description)
+Project
+Lưu thông tin về 1 dự án mã nguồn mở mới vào Database.
+deleteProject()
+projectId (string)
+{ success: boolean }
+Xóa bỏ dự án và toàn bộ tài liệu con đã tạo bên trong.
+Một số giao diện chính của module quản lý danh sách dự án:
+Hình 4-2:  Giao diện trang quản lý danh sách dự án (Phân quyền admin)
+Hình 4-3: Giao diện trang quản lý danh sách dự án (Phân quyền user)
+Hình 4-4: Giao diện tạo dự án          Hình 4-5: Giao diện xóa dự án
+4.3.3. Module thu thập và lọc dữ liệu mã nguồn
+Module này là một tiến trình chạy ngầm quan trọng trong dự án, đóng vai trò làm cầu nối giữa nền tảng OpenDoc AI và hệ sinh thái mã nguồn mở. Nó sử dụng GitHub REST API để truy xuất và tiền xử lý dữ liệu trước khi giao tiếp với AI.
+Các chức năng chính:
+Xác thực kho mã nguồn: Kiểm tra tính hợp lệ và quyền truy cập của URL GitHub được cung cấp.
+Trích xuất cấu trúc: Kéo sơ đồ cây thư mục và nội dung của các tệp tin cấu hình trọng yếu.
+Lọc dữ liệu rác: Tự động quét và loại bỏ các thư mục/tệp tin không mang lại ngữ cảnh (như node_modules, .git, tệp ảnh) để tối ưu hóa dung lượng dữ liệu.
+Đóng gói ngữ cảnh: Chuẩn bị khối lượng dữ liệu mã nguồn đã làm sạch để gửi tới Gemini
+Bảng 4-8: Bảng các hàm quan trọng trong module thu thập và lọc dữ liệu mã nguồn
+Hàm
+Tham số
+Kiểu trả về
+Mục đích
+getRepoTree()
+owner (string), repo (string), branch (string)
+GitHubTreeResponse
+Lấy cấu trúc toàn bộ file/thư mục từ Github API.
+getFileContent()
+owner, repo, path
+String
+Đọc mã nguồn bên trong một tập tin cụ thể từ Github.
+parseGitHubUrl()
+url (string)
+{ owner, repo }
+Bóc tách đường dẫn URL dự án thành định dạng owner/repo.
+processRepoTree()
+tree (array)
+Array
+Lọc, chuyển đổi cấu trúc cây trả về thành thông tin sử dụng được.
+Một số hình ảnh về module thu thập và lọc dữ liệu mã nguồn:
+Hình 4-6,7: Kết quả thu thập cây thư mục của dự án DalatFlow (bên trái) và skill-markdown-to-vietnamese-doc (bên phải)
+4.3.4. Module tích hợp AI sinh tài liệu tự động
+Đây là module cốt lõi của OpenDoc AI, chịu trách nhiệm tự động hóa quá trình viết tài liệu kỹ thuật. Module này tích hợp chặt chẽ với Google Gemini API để phân tích ngữ cảnh lập trình phức tạp và tạo sinh ra văn bản ngôn ngữ tự nhiên.
+Các chức năng chính:
+Xây dựng Prompt: Đóng gói ngữ cảnh mã nguồn cùng với các câu lệnh đặc tả để điều hướng AI viết tài liệu theo cấu trúc chuẩn.
+Giao tiếp Gemini API: Thiết lập kết nối an toàn với dịch vụ của Google thông qua API Key được bảo mật.
+Xử lý luồng: Tiếp nhận và hiển thị dữ liệu trả về theo thời gian thực thay vì chờ đợi toàn bộ khối văn bản.
+Chuẩn hóa đầu ra: Đảm bảo kết quả sinh ra tuân thủ tuyệt đối định dạng văn bản Markdown.
+Bảng 4-9: Bảng các hàm quan trọng trong module sinh tài liệu tự động
+Hàm
+Tham số
+Kiểu trả về
+Mục đích
+generateDocumentationStream()
+repoInfo, tree, priorityFiles, userApiKey
+Stream
+Gửi cấu trúc code lên AI, nhận về chuỗi text Streaming tài liệu.
+generateContentStream()
+contextParts
+Stream
+Gọi API của mô hình Gemini trả về dữ liệu stream dạng luồng (chunk).
+4.3.5. Module không gian làm việc và soạn thảo
+Module không gian làm việc là nơi diễn ra sự tương tác trực quan nhất giữa con người và kết quả của AI. Nó cung cấp một môi trường soạn thảo chuyên nghiệp theo mô hình chia đôi màn hình (Split-pane).
+Các chức năng chính:
+Soạn thảo Markdown: Cung cấp khu vực chỉnh sửa văn bản thuần với tính năng đánh dấu cú pháp.
+Kết xuất HTML: Hiển thị ngay lập tức giao diện trực quan của tài liệu song song với quá trình gõ phím của người dùng.
+Đồng bộ cuộn: Tự động tính toán và đồng bộ vị trí thanh cuộn giữa khung soạn thảo và khung xem trước.
+Lưu trữ tài liệu: Cập nhật các thay đổi thủ công vào cơ sở dữ liệu để đồng bộ hóa trạng thái tài liệu mới nhất.
+Bảng 4-10: Bảng các hàm quan trọng trong module không gian làm việc và soạn thảo
+Hàm
+Tham số
+Kiểu trả về
+Mục đích
+saveDocument()
+data (projectId, content, status)
+Document
+Cập nhật hoặc lưu nháp nội dung Markdown của tài liệu đang soạn.
+getDocumentByProjectId()
+projectId (string)
+Document | null
+Lấy ra bản nháp/bản hoàn thiện của tài liệu trong workspace theo ID dự án.
+on('ssh-connect')
+config (host, username)
+void
+Mở kết nối giao thức SSH từ web browser đến máy chủ.
+Một số hình ảnh về module không gian làm việc và soạn thảo
+Hình 4-8: Giao diện không gian làm việc và soạn thảo
+Hình 4-9: Giao diện chức năng sinh tài liệu bằng AI và lưu kết quả
+Hình 4-10: Kết quả AI sinh ra
+4.3.6. Module phân quyền và bảo vệ tuyến đường
+Module này hoạt động ở tầng mạng lưới định tuyến của ứng dụng Next.js, có tác dụng ngăn chặn các truy cập trái phép vào các trang nội bộ.
+Các chức năng chính:
+Next.js Middleware: Tự động kiểm tra trạng thái token xác thực trên mỗi lượt điều hướng URL của người dùng.
+Bảo vệ tuyến đường: Chuyển hướng những người dùng chưa đăng nhập về trang chủ hoặc trang đăng nhập.
+Kiểm soát truy cập dựa trên vai trò (RBAC): Phân tách rõ ràng luồng truy cập giữa Người dùng thông thường và Quản trị viên.
+Chống giả mạo: Ngăn chặn các tài khoản thông thường cố tình truy cập vào trang bảng điều khiển của hệ thống quản trị.
+Bảng 4-11: Bảng các hàm quan trọng trong module phân quyền và bảo vệ tuyến đường
+Hàm
+Tham số
+Kiểu trả về
+Mục đích
+updateSession()
+request (NextRequest)
+NextResponse
+Middleware kiểm tra phiên người dùng ở mỗi Request để điều hướng.
+4.3.7. Module quản trị hệ thống
+Module quản trị là phân hệ có đặc quyền cao nhất, được thiết kế chuyên biệt dành cho Admin để duy trì cấu hình lõi và giám sát tình trạng hoạt động của nền tảng mà không cần rời khỏi trình duyệt.
+Các chức năng chính:
+Quản lý khóa API: Cung cấp giao diện để thêm, sửa, xóa các mã khóa dịch vụ nhạy cảm (Gemini API, Supabase) một cách an toàn.
+Web Terminal: Khởi tạo giao diện dòng lệnh giả lập trực tiếp trên trình duyệt bằng thư viện xterm.js.
+Kết nối SSH thời gian thực: Sử dụng Socket.io và giao thức SSH để thiết lập kênh giao tiếp trực tiếp với hệ điều hành máy chủ Debian.
+Thống kê tổng quan: Hiển thị các chỉ số như số lượt truy cập và số lần tạo sinh văn bản thành công.
+Bảng 4-10: Bảng các hàm quan trọng trong module quản trị hệ thống
+Hàm
+Tham số
+Kiểu trả về
+Mục đích
+getUsage()
+userId (string)
+object
+Truy xuất dữ liệu mức độ sử dụng AI hoặc dự án từ hệ thống CSDL.
+updateSettings()
+data ({ [key:string]: string })
+Settings
+Cập nhật cấu hình người dùng như API key.
+Một số hình ảnh về giao diện quản trị hệ thống:
+Hình 4-11: Giao diện quản lý biến môi trường của dự án
+Hình 4-12: Giao diện sau khi bấm nút kiểm tra kết nối tới gemini API key
+Hình 4-13: Giao diện web terminal
+4.4 Ứng dụng AI trong quá trình phát triển
+Các câu lệnh đã sử dụng để thực hiện dự án được thống kê chi tiết tại Phụ lục A. Các bước áp dụng AI có thể được mô tả cơ bản như sau:
+Bước 1: Sử dụng tài liệu tổng quan dự án để tạo ra một bản đặc tả cho phiên bản đầu tiên của dự án
+Bước 2: Từ tài liệu đặc tả yêu cầu được tạo ra ở bước 1, tiếp tục tạo 1 tài liệu liên quan tới thiết lập dự án (Chứa những bước mà AI không thể thực hiện để lập trình viên thực hiện thủ công) và tài liệu kế hoạch thực hiện chi tiết
+Bước 3: Yêu cầu AI thực hiện từng giai đoạn trong tài liệu kế hoạch chi tiết (Có thể yêu cầu thêm tách branch cho từng giai đoạn để dễ đánh giá mã nguồn)
+Bước 4: Kiểm thử và sửa lỗi 
+Bước 5: Viết một file chứa những thay đổi của ứng dụng theo semantic versioning
+Bước 6: Lặp lại bước 1 cho phiên bản tiếp theo của dự án
+4.5 Triển khai hệ thống 
+4.5.1 Đóng gói ứng dụng với Docker
+Quá trình này giúp đóng gói môi trường chạy của ứng dụng, đảm bảo mã nguồn hoạt động nhất quán trên mọi máy chủ. Tại bước này, mã nguồn của ứng dụng đã được clone về VPS thông qua Git. Sau đây là các bước đã được sử dụng để đóng gói ứng dụng với docker:
+Bước 1: git clone ứng dụng về VPS
+Bước 2: Khởi tạo tệp Dockerfile tại thư mục gốc của dự án để thiết lập môi trường Node.js, sao chép mã nguồn và cài đặt các gói thư viện cần thiết.
+Bước 3: Tạo tệp docker-compose.yml để định nghĩa cấu hình mạng, biến môi trường và thiết lập ánh xạ cổng (ví dụ: bọc Next.js và Socket.io vào chung một vùng chứa ảo).
+Bước 4: Thực thi lệnh đóng gói và khởi chạy các dịch vụ ở chế độ chạy ngầm thông qua lệnh “docker-compose up -d –build”
+Bước 5: Kiểm tra trạng thái các container đang hoạt động để đảm bảo ứng dụng đã được ánh xạ đúng ra cổng 3000 thông qua lệnh “docker ps”
+4.5.2 Triển khai lên máy chủ ảo và cấu hình Reverse Proxy bằng Nginx
+Sau khi có mã nguồn, hệ thống sẽ được đưa lên môi trường máy chủ ảo (VPS) chạy hệ điều hành Debian và sử dụng Nginx để định tuyến luồng dữ liệu. Sau đây là các bước thực hiện:
+Bước 1: Kết nối từ xa vào máy chủ VPS Debian thông qua giao thức SSH thông qua lệnh “ssh root@&lt;địa_chỉ_IP_của_VPS&gt;”
+Bước 2: Cài đặt web server Nginx từ kho lưu trữ chính thức của Debian thông qua lệnh “apt update &amp;&amp; apt install nginx -y”
+Bước 3: Tạo và mở tệp cấu hình điều hướng mới cho dự án sử dụng lệnh “nano /etc/nginx/sites-available/opendoc”
+Bước 4: Khai báo cấu hình định tuyến. Chuyển tiếp toàn bộ lưu lượng HTTP thông thường vào cổng 3000 (Next.js) và nâng cấp kết nối cho các luồng WebSocket để tính năng Web Terminal hoạt động.
+Bước 5: Kích hoạt tệp cấu hình bằng cách tạo symbolic link và khởi động lại dịch vụ Nginx “ln -s /etc/nginx/sites-available/opendoc /etc/nginx/sites-enabled/ “, “nginx -t “, “systemctl restart nginx”
+4.5.3 Cấu hình tên miền và chứng chỉ bảo mật (SSL) qua Cloudflare
+Ngoài ra, dự án còn sử dụng Cloudfare làm hạ tầng mạng trung gian. Các bước thực hiện như sau:
+Bước 1: Đăng nhập vào bảng điều khiển Cloudflare, thêm tên miền của dự án (opendoc.ngobatai.dev) và cấu hình bản ghi DNS (Loại A) trỏ về địa chỉ IP của VPS Debian. Bật biểu tượng "Đám mây màu cam" để kích hoạt lớp bảo vệ Proxy.
+Bước 2: Trong mục SSL/TLS trên Cloudflare, thiết lập chế độ mã hóa sang mức Full (Strict). Điều này bắt buộc mọi luồng dữ liệu từ Cloudflare đến VPS đều phải được mã hóa.
+Bước 3: Để Nginx trên máy chủ VPS có thể giải mã SSL (cổng 443), tiến hành cài đặt công cụ Certbot. Sử dụng lệnh “apt install certbot python3-certbot-nginx -y”
+Bước 4: Cấp phát chứng chỉ SSL tự động (Let's Encrypt) cho tên miền và để Certbot tự động cấu hình lại tệp Nginx. Sử dụng lệnh “certbot --nginx -d opendoc.ngobatai.dev”
+Bước 5: Xác nhận chứng chỉ tự động gia hạn để hệ thống vận hành liên tục mà không bị gián đoạn bảo mật. Sử dụng lệnh “systemctl status certbot.timer”
+CHƯƠNG 5: KẾT LUẬN VÀ HƯỚNG PHÁT TRIỂN
+5.1 Kết luận
+Qua quá trình thực hiện đồ án, em đã xây dựng thành công ứng dụng web OpenDoc AI - một nền tảng phần mềm dạng dịch vụ (SaaS) hỗ trợ tự động hóa việc viết tài liệu kỹ thuật. Sản phẩm đáp ứng đầy đủ các yêu cầu cốt lõi ban đầu và mang lại giá trị thực tiễn cao cho cộng đồng lập trình viên.
+Những kết quả đạt được:
+Xác thực người dùng: Triển khai đăng nhập qua GitHub OAuth kết hợp với Supabase Auth, giúp quản lý định danh và phiên làm việc của người dùng một cách an toàn.
+Thao tác dữ liệu: Hoàn thiện vòng đời quản lý dự án, cho phép lập trình viên dễ dàng khởi tạo nền tảng, xem danh sách tổng quan, cập nhật nội dung tài liệu trong không gian làm việc và xóa dự án khi không còn nhu cầu.
+Giao diện người dùng: Xây dựng trình soạn thảo Markdown trực quan với chế độ chia đôi màn hình (Split-pane), tương thích hoàn toàn trên đa thiết bị nhờ ứng dụng Tailwind CSS và hệ thống thành phần Shadcn/UI.
+Bảo mật và phân quyền: Sử dụng cơ chế bảo mật mức hàng trực tiếp trên hệ quản trị Supabase PostgreSQL, đảm bảo tính bảo mật cao và ngăn chặn truy cập chéo vào dữ liệu của người dùng khác.
+Thu thập và xử lý dữ liệu: Tự động hóa quá trình bóc tách tệp cấu hình và sơ đồ kiến trúc thông qua GitHub REST API để làm ngữ cảnh đầu vào, thay thế hoàn toàn cho thao tác tải tệp thủ công.
+Tích hợp mô hình AI tạo sinh: Ứng dụng Google Gemini API để phân tích cấu trúc mã nguồn đã quét và tự động sinh tệp đặc tả README.md với hiệu ứng xuất văn bản theo thời gian thực.
+Ảo hóa hệ thống: Đóng gói toàn bộ nền tảng Next.js thông qua Dockerfile (Multi-stage build) và tệp docker-compose.yml, giúp hệ thống sẵn sàng khởi chạy đồng bộ.
+Triển khai thực tế: Đưa ứng dụng vận hành thành công trên môi trường máy chủ ảo (VPS) DigitalOcean, kết hợp cấu hình proxy ngược Nginx để thiết lập tên miền riêng và chứng chỉ mã hóa SSL an toàn.
+Hoàn thiện tính năng phân quyền người dùng (User/Admin) cơ bản
+Cung cấp các tính năng quản trị hệ thống cho admin như quản lý các API keys, kiểm tra kết nối tới API key của Gemini, và kết nối trực tiếp tới VPS của dự án thông qua websocket và thư viện xterm.js
+Hệ thống cung cấp một giải pháp thiết thực, giúp các nhà phát triển phần mềm và những người duy trì dự án mã nguồn mở tiết kiệm tối đa thời gian đóng gói sản phẩm, từ đó có thể tập trung hoàn toàn vào việc phát triển logic nghiệp vụ cốt lõi.
+5.2 Hạn chế của hệ thống
+Hạn chế nền tảng kết nối: Hệ thống hiện tại bị giới hạn chỉ hỗ trợ tích hợp với nền tảng GitHub. Điều này khiến người dùng không thể tự động sinh tài liệu cho các kho lưu trữ trên GitLab, Gitea hoặc các dự án lưu trữ cục bộ 
+Thiếu tính năng quản lý phiên bản: Ứng dụng chưa hỗ trợ lưu trữ lịch sử các bản sửa đổi của tài liệu. Người dùng không thể khôi phục lại các phiên bản README.md trước đó nếu xảy ra sai sót trong quá trình chỉnh sửa.
+Hạn chế trong không gian làm việc nhóm: Dự án chưa phát triển tính năng cộng tác đa người dùng, mỗi dự án chỉ cho phép một cá nhân duy nhất quản lý. Việc thiếu vắng cơ chế chia sẻ và mời thành viên khiến sản phẩm khó áp dụng cho các đội ngũ phát triển phần mềm quy mô lớn.
+Chưa đa dạng hóa định dạng đầu ra: Kết quả sinh tài liệu hiện chỉ hỗ trợ duy nhất định dạng văn bản Markdown. Hệ thống chưa tích hợp tính năng xuất bản tài liệu sang các định dạng phổ biến khác như PDF, HTML hoặc Word để phục vụ các mục đích báo cáo đa dạng.
+Thiếu cơ chế tự động hóa theo lịch trình: Hệ thống chưa được trang bị tính năng cập nhật tài liệu định kỳ. Việc đồng bộ hóa nội dung README.md với sự thay đổi của mã nguồn vẫn yêu cầu người dùng phải thực hiện thao tác quét lại theo cách thủ công.
+Chưa có hệ thống mẫu: Người dùng chưa được cung cấp một thư viện các mẫu README.md có sẵn để lựa chọn theo từng loại hình dự án. Điều này có thể làm giảm tính linh hoạt và cá nhân hóa nếu người dùng muốn một cấu trúc tài liệu khác với mặc định của AI.
+5.3 Hướng phát triển
+Mặc dù phiên bản hiện tại đã cơ bản đáp ứng yêu cầu, hệ thống OpenDoc AI vẫn định hướng mở rộng và nâng cấp các tính năng sau trong tương lai:
+Thêm các chức năng tạo các loại tài liệu khác: Mở rộng khả năng tự động sinh các tài liệu chuyên sâu khác như API Documentation, CONTRIBUTING.md, CHANGELOG.md và ứng dụng học máy để phân tích sâu vào luồng logic nghiệp vụ nội bộ của mã nguồn.
+Tối ưu hóa luồng thu thập dữ liệu: Cải thiện thuật toán để tăng tốc độ bóc tách các kho lưu trữ khổng lồ và mở rộng nền tảng tích hợp sang GitLab, Bitbucket.
+Tích hợp tự động hóa CI/CD: Áp dụng GitHub Actions hoặc Webhooks để hệ thống tự động quét và cập nhật lại tài liệu mỗi khi có sự thay đổi mã nguồn mới (Push/Pull Request), đảm bảo tính đồng bộ thời gian thực.
+Xây dựng cộng đồng mã nguồn mở: Phát triển tính năng tự động đánh giá mức độ hoàn thiện của dự án, đề xuất giấy phép chuẩn mực và tạo không gian kết nối để thu hút các nhà phát triển cùng tham gia đóng góp.
+TÀI LIỆU THAM KHẢO
+Google, "Gemini API Documentation." [Online]. Available: https://ai.google.dev/docs. [Accessed: May 23, 2026].
+DigitalOcean, "DigitalOcean Documentation." [Online]. Available: https://docs.digitalocean.com/. [Accessed: May 23, 2026].
+Meta, "React: The library for web and native user interfaces." [Online]. Available: https://react.dev/. [Accessed: May 23, 2026].
+Vercel, "Next.js Documentation." [Online]. Available: https://nextjs.org/docs. [Accessed: May 23, 2026].
+Docker, Inc., "Docker Documentation." [Online]. Available: https://docs.docker.com/. [Accessed: May 23, 2026].
+GitHub, "GitHub REST API Documentation." [Online]. Available: https://docs.github.com/en/rest. [Accessed: May 23, 2026].
+Supabase, "Supabase Documentation." [Online]. Available: https://supabase.com/docs. [Accessed: May 23, 2026].
+Tailwind Labs, "Tailwind CSS Documentation." [Online]. Available: https://tailwindcss.com/docs. [Accessed: May 23, 2026].
+PHỤ LỤC
+Phụ lục A: Danh sách các prompt và skills đã sử dụng trong quá trình thực hiện dự án
+Bảng A-1: Bảng liệt kê các prompt đã sử dụng
+STT
+Prompt
+Mục đích/Tác dụng
+1
+Đọc, phân tích nội dung bài thực hành tại @2212453-TaiLieuTongQuan-OpenDocAI.pdf. Sau đó giúp tôi làm rõ yêu cầu, lên kế hoạch và biên soạn nội dung tập tin SPEC.md chứa logic nghiệp vụ của dự án
+Câu lệnh này nhằm tạo ra một bản đặc tả yêu cầu dự án cho phiên bản MVP  của dự án nhằm giúp AI có thể nắm rõ các yêu cầu chi tiết của dự án để lên kế hoạch thực hiện
+2
+Dựa vào bản đặc tả yêu cầu dự án @SPEC.md, hãy biên soạn cho tôi tài liệu hướng dẫn cấu hình môi trường dự án @SETUP.md (Từ khâu tạo dự án supabase tới tạo bảng, khởi tạo dự án…)
+Câu lệnh này nhằm tạo ra một file hướng dẫn thiết lập supabase, githib OAuth 
+3
+Tôi đã hoàn thành cài đặt môi trường dự án theo @SETUP.md, bây giờ hãy dựa vào bản đặc tả yêu cầu dự án @SPEC.md. Hãy giúp tôi làm rõ yêu cầu và lên kế hoạch chi tiết để thực hiện dự án này. Sau đó hãy lưu vào PLAN.md
+Phân chia file SPEC.md thành các giai đoạn chi tiết để cho AI thực hiện
+4
+Tôi đã hoàn thành các bước trong @TaiLieuKyThuat/SETUP.md, bây giờ bạn hãy thực hiện giai đoạn 1 trong @TaiLieuKyThuat/PLAN.md. Biết khi bắt đầu một mục con 1.x hãy tạo một branch (Tuân thủ nguyên tắc đặt tên branch) để làm việc trên đó, khi kết thúc thì commit code lên github theo chuẩn Conventional Commit.
+Thực hiện giai đoạn 1 của dự án
+5
+Bây giờ bạn hãy thực hiện giai đoạn 2 trong @TaiLieuKyThuat/PLAN.md. Biết khi bắt đầu một mục con 2.x hãy tạo một branch (Tuân thủ nguyên tắc đặt tên branch) để làm việc trên đó, khi kết thúc thì commit code lên github theo chuẩn Conventional Commit.
+Thực hiện giai đoạn 2 của dự án
+6
+Bây giờ bạn hãy thực hiện giai đoạn 3 trong @TaiLieuKyThuat/PLAN.md. Biết khi bắt đầu một mục con 3.x hãy tạo một branch (Tuân thủ nguyên tắc đặt tên branch) để làm việc trên đó, khi kết thúc thì commit code lên github theo chuẩn Conventional Commit
+Thực hiện giai đoạn 3 của dự án
+7
+Bây giờ bạn hãy thực hiện giai đoạn 4 trong @TaiLieuKyThuat/PLAN.md. Biết khi bắt đầu một mục con 4.x hãy tạo một branch (Tuân thủ nguyên tắc đặt tên branch) để làm việc trên đó, khi kết thúc thì commit code lên github theo chuẩn Conventional Commit
+Thực hiện giai đoạn 4 của dự án
+8
+Bây giờ bản MVP đã hoàn thành rồi, hãy tạo một CI/CD trong github workflow hoàn chỉnh để có thể kiểm thử toàn bộ chức năng cho ứng dụng
+Tạo một file kiểm thử đơn giản để đảm bảo các chức năng chạy đúng
+9
+Hãy tạo một CHANGELOG.md để ghi lại những tính nang đã tạo ra trong bản 0.0.0 này
+Ghi lại những thay đổi (Thêm, xóa, sửa những tính năng nào) ở phiên bản 0.0.0 để AI nẵm rõ ràng các tính năng đang có mà không cần phải đọc code
+10
+Dựa trên bản đặc tả yêu cầu @TaiLieuKyThuat/SPEC.md đã được hoàn thành. Hãy tạo ra một bản đặc tả yêu cầu mới cho phiên bản 0.1.0 với những chức năng được bổ sung như sau: 
+Thêm chế độ tối (Ứng dụng sẽ được mặc định ở chế độ tối), 
+Cải thiện workflow (Khi bấm vào nút hoàn thành thì quay về trang dashboard), 
+Khi bấm vào project-card thì bấm vào chỗ nào cũng vô được project (Thay vì chỉ bấm vào nửa dưới như trước), 
+Thêm nút lùi trong workspace-editor để người dùng có thể quay lại trang dashboard. Biết các tác vụ liên quan tới UI đều phải dùng skill ui-ux-pro-max
+Tạo bản đặc tả yêu cầu cho phiên bản 0.1.0 của dự án
+11
+Hãy dựa trên @TaiLieuKyThuat/SPEC/SPEC-1.1.md và những gì đã hoàn thành được trong @CHANGELOG.md hãy tạo bản kế hoạch chi tiết để thực hiện phiên bản 1.1 của ứng dụng và lưu nó vào trong PLAN.md.
+Tương tự như prompt yêu cần tạo PLAN.md của prompt 3 nhưng cho phiên bản 0.1.0 của dự án
+12
+Bây giờ hãy thực hiện tuần tự từng giai đoạn theo @PLAN.md, biết các giai đoạn liên quan tới UI đều phải dùng skill ui-ux-pro-max-skill. Ngoài ra, bắt đầu mỗi giai đoạn phải tạo branch riêng cho các giai đoạn đó.
+Thực hiện PLAN.md nhưng phải sử dụng skills ui-ux-pro-max-skill để tuân thủ các best practice về UI, UX
+13
+Kế hoạch của 2 bản đặc tả đã được thực hiện xong rồi, giờ hãy viết file DEPLOY.md để hướng dẫn tôi deploy lên VPS đi, bắt đầu từ bước phải thay đổi những gì trong ứng dụng để có thể deploy, sử dụng cloudfare và dockernize ứng dụng sau đó đẩy docker container lên rồi thiết lập reverse proxy...
+Tạo file hướng dẫn cách deploy dự án lên môi trường ảo
+Bảng A-2: Bảng liệt kê các skills đã sử dụng
+STT
+Skills
+Mục đích/Tác dụng
+1
+terminal-ops
+Cung cấp quy trình thực thi lệnh dựa trên bằng chứng, giúp chạy lệnh shell và kiểm tra kết quả một cách minh bạch. Kỹ năng này đảm bảo mọi thay đổi hoặc lỗi CI đều được xác thực với bằng chứng cụ thể trước khi tiếp tục..
+2
+repo-scan
+Thực hiện kiểm toán toàn diện mã nguồn để phân loại tệp tin và phát hiện các thư viện bên thứ ba được nhúng. Nó cung cấp các báo cáo HTML tương tác với đánh giá bốn cấp độ để hỗ trợ việc quản lý và refactor mã nguồn.
+3
+context7-mcp
+Kết nối với API Context7 để truy xuất tài liệu và ví dụ mã nguồn mới nhất của các thư viện và framework. Điều này giúp AI luôn cập nhật được các thay đổi mới nhất trong cú pháp và cấu hình mà dữ liệu huấn luyện cũ chưa có.
+4
+git-workflow
+Thiết lập các quy chuẩn làm việc với Git như chiến lược phân nhánh, quy ước commit và giải quyết xung đột. Kỹ năng này tối ưu hóa việc phát triển cộng tác cho các nhóm ở mọi quy mô thông qua các thực hành tốt nhất.
+5
+frontend-design
+Tập trung vào việc tạo ra giao diện người dùng chuyên nghiệp, có tính thẩm mỹ cao và cá nhân hóa. Nó đảm bảo các thành phần web không chỉ hoạt động tốt mà còn có thiết kế tinh tế về khoảng cách, kiểu chữ và chuyển động.
+6
+frontend-patterns
+Cung cấp các mẫu thiết kế tối ưu cho React, Next.js và quản lý trạng thái nhằm tăng hiệu năng ứng dụng. Kỹ năng này giúp xây dựng cấu trúc giao diện dễ bảo trì và tuân thủ các thực hành tốt nhất trong phát triển frontend.
+7
+deployment-patterns
+Hỗ trợ quy trình triển khai, thiết lập CI/CD, Docker hóa và các chiến lược khôi phục hệ thống (rollback). Nó đảm bảo ứng dụng luôn trong trạng thái sẵn sàng sản xuất với các danh sách kiểm tra an toàn và hiệu quả.
+8
+e2e-testing
+Cung cấp các mẫu kiểm thử toàn trình với Playwright, tập trung vào mô hình Page Object và xử lý các bài test không ổn định. Kỹ năng này giúp tự động hóa việc xác thực luồng người dùng và tích hợp chặt chẽ vào quy trình CI/CD.
+9
+ui-ux-pro-max
+Cung cấp hệ thống trí tuệ thiết kế UI/UX toàn diện với hàng trăm phong cách, bảng màu và quy tắc trải nghiệm người dùng cho cả ứng dụng web và di động trên nhiều nền tảng công nghệ. Công cụ này hỗ trợ nhà phát triển lập kế hoạch, xây dựng và tối ưu hóa giao diện thông qua việc tra cứu các mẫu thiết kế chuẩn, đảm bảo tính thẩm mỹ, khả năng tiếp cận và hiệu quả sử dụng cao nhất.
+Phụ lục B: Tổng hợp một số tài liệu được sinh bởi AI trong quá trình thực hiện dự án
+Lưu ý: Toàn bộ các file bên dưới đều đã được loại bỏ kí tự md để dễ trình bày trong báo cáo 
+File SPEC.md
+OpenDoc AI - Technical Specification (SPEC.md)
+1. Tổng quan dự án (Project Overview)
+OpenDoc AI là nền tảng SaaS hỗ trợ lập trình viên tự động hóa quy trình viết tài liệu README.md chuyên nghiệp bằng cách phân tích trực tiếp mã nguồn từ GitHub thông qua AI (Gemini).
+Tầm nhìn: Biến mọi dự án cá nhân thành dự án mã nguồn mở chuẩn mực trong vài giây.
+Giá trị cốt lõi: Tiết kiệm thời gian, Zero-setup, Góc nhìn kiến trúc tổng thể (Macro view).
+2. Logic nghiệp vụ &amp; Luồng người dùng (Business Logic &amp; User Flow)
+2.1. Luồng trải nghiệm chính
+Xác thực: Người dùng đăng nhập qua GitHub OAuth.
+Nhập liệu: Dán link repository GitHub (Public).
+Xử lý (Data Pipeline): 
+Hệ thống bóc tách owner và repo từ URL.
+Quét cấu trúc thư mục qua GitHub Trees API. Sử dụng GitHub Personal Access Token (PAT) cấu hình ngầm trên backend để mở rộng giới hạn API lên 5.000 requests/giờ.
+Lọc bỏ thư mục rác (node_modules, .git, etc.).
+Nhận diện các tệp "điểm neo" (package.json, Dockerfile, v.v.).
+Tải nội dung tệp song song.
+Sinh tài liệu (AI Engine): AI phân tích ngữ cảnh và sinh Markdown theo cấu trúc chuẩn.
+Biên tập &amp; Hoàn thiện: Người dùng chỉnh sửa trên Split-pane Editor và xem Preview thời gian thực.
+Lưu trữ/Xuất bản: Lưu nháp (Draft) hoặc đánh dấu hoàn thành (Completed) vào Database, hoặc Copy/Download tài liệu.
+2.2. Các Module chức năng chính
+Module 1: Auth &amp; Profile: Quản lý phiên và đồng bộ avatar/username từ GitHub.
+Module 2: Crawler Engine: Xử lý logic lọc tệp thông minh (Smart Filtering) để tối ưu token AI.
+Module 3: AI Orchestrator: Quản lý System Prompt, xử lý stream kết quả từ Gemini.
+Module 4: Editor Workspace: 
+Cột trái: Khung soạn thảo Markdown và thanh Sidebar nhỏ hiển thị cây thư mục dự án vừa quét.
+Cột phải: Khung Preview HTML theo thời gian thực.
+Lưu trữ trạng thái tài liệu (Draft/Completed) liên kết với dự án.
+3. Đặc tả kỹ thuật (Technical Specifications)
+3.1. Tech Stack
+Frontend: Next.js 14+ (App Router), Tailwind CSS, Shadcn/UI, @uiw/react-md-editor (hoặc monaco-editor).
+Backend: Next.js Route Handlers.
+Database &amp; Auth: Supabase (PostgreSQL, GoTrue) và RLS (Row Level Security).
+AI: Google Gemini API.
+Integration: GitHub REST API.
+3.2. Cấu trúc dữ liệu (Database Schema)
+Table profiles: id (uuid), username, avatar_url, updated_at.
+Table projects: id, user_id, repo_url, repo_name, description.
+Table documents: id, project_id, content (text), status (draft/completed), created_at.
+4. Chiến lược AI (AI Strategy)
+4.1. System Prompt
+AI sẽ được đóng vai (Role-playing) là "Senior Technical Writer".
+Input: Cấu trúc thư mục + Nội dung các tệp cấu hình quan trọng.
+Output: Markdown gồm: Badges, Tech Stack, Architecture, Installation, Usage, Contributing.
+4.2. Tối ưu hóa ngữ cảnh (Context Optimization)
+Chỉ gửi nội dung các tệp có giá trị kiến trúc cao (config files, main entry points).
+Sử dụng Mock Data mode (chuyển đổi JSON/Markdown tĩnh) để phát triển UI mà không tốn API quota.
+5. Lộ trình triển khai (Roadmap - 7 Ngày)
+Ngày 1-2: Setup base (Next.js + Supabase), UI Split-pane cơ bản.
+Ngày 3-4: Xây dựng Pipeline kết nối GitHub API và logic lọc tệp.
+Ngày 5-6: Tích hợp Gemini API, tinh chỉnh Prompt và xử lý Markdown stream.
+Ngày 7: Kiểm thử luồng cuối (E2E), tối ưu hóa trải nghiệm người dùng và Deploy Vercel.
+6. Tiêu chí nghiệm thu (Acceptance Criteria)
+Đăng nhập thành công bằng GitHub.
+Phân tích đúng cấu trúc bất kỳ repo public nào (vượt rate limit nhờ PAT).
+AI sinh ra Markdown có cấu trúc đầy đủ và chính xác.
+Giao diện Split-pane có Sidebar cây thư mục và Preview thời gian thực.
+Hỗ trợ lưu trạng thái tài liệu (Draft/Completed) và Copy/Download README.md.
+File SETUP.md
+Hướng dẫn Cấu hình Môi trường Phát triển - OpenDoc AI
+Tài liệu này hướng dẫn chi tiết các bước thiết lập môi trường phát triển cho dự án OpenDoc AI dựa trên đặc tả kỹ thuật tại SPEC.md.
+1. Thiết lập Supabase (Database &amp; Auth)
+1.1. Tạo dự án
+Truy cập Supabase Dashboard và tạo một dự án mới.
+Lưu lại Project URL và Anon Key để cấu hình biến môi trường sau này.
+1.2. Cấu hình Database (SQL Editor)
+Chạy đoạn mã SQL sau trong SQL Editor của Supabase để khởi tạo cấu trúc bảng và Row Level Security (RLS):
+-- 1. Table profiles (Thông tin người dùng)
+create table profiles (
+  id uuid references auth.users on delete cascade primary key,
+  username text unique,
+  avatar_url text,
+  updated_at timestamp with time zone default timezone('utc'::text, now())
+);
+-- 2. Table projects (Dự án của người dùng)
+create table projects (
+  id uuid default gen_random_uuid() primary key,
+  user_id uuid references profiles(id) on delete cascade not null,
+  repo_url text not null,
+  repo_name text not null,
+  description text,
+  created_at timestamp with time zone default timezone('utc'::text, now())
+);
+-- 3. Table documents (Tài liệu README được sinh ra)
+create table documents (
+  id uuid default gen_random_uuid() primary key,
+  project_id uuid references projects(id) on delete cascade not null,
+  content text,
+  status text check (status in ('draft', 'completed')) default 'draft',
+  created_at timestamp with time zone default timezone('utc'::text, now())
+);
+-- BẬT ROW LEVEL SECURITY (RLS)
+alter table profiles enable row level security;
+alter table projects enable row level security;
+alter table documents enable row level security;
+-- CHÍNH SÁCH TRUY CẬP (Policies)
+-- Profile: Chỉ người dùng sở hữu mới được xem/sửa
+create policy "Users can view own profile" on profiles for select using (auth.uid() = id);
+create policy "Users can update own profile" on profiles for update using (auth.uid() = id);
+-- Projects: Chỉ người dùng tạo mới được truy cập
+create policy "Users can manage own projects" on projects 
+  for all using (auth.uid() = user_id);
+-- Documents: Truy cập thông qua project liên kết
+create policy "Users can manage own documents" on documents 
+  for all using (
+    exists (
+      select 1 from projects 
+      where projects.id = documents.project_id 
+      and projects.user_id = auth.uid()
+    )
+  );
+-- TRIGGER TỰ ĐỘNG TẠO PROFILE KHI ĐĂNG KÝ
+create function public.handle_new_user()
+returns trigger as $$
+begin
+  insert into public.profiles (id, username, avatar_url)
+  values (new.id, new.raw_user_meta_data-&gt;&gt;'full_name', new.raw_user_meta_data-&gt;&gt;'avatar_url');
+  return new;
+end;
+$$ language plpgsql security definer;
+create trigger on_auth_user_created
+  after insert on auth.users
+  for each row execute procedure public.handle_new_user();
+1.3. Cấu hình GitHub Auth
+Tại Supabase: Vào Authentication &gt; Providers &gt; GitHub.
+Tại GitHub: Tạo một OAuth App mới (GitHub Developer Settings). 
+Homepage URL: http://localhost:3000 (cho dev).
+Authorization callback URL: Lấy từ Supabase GitHub Auth setting (thường có dạng https://[PROJECT_ID].supabase.co/auth/v1/callback).
+Sao chép Client ID và Client Secret từ GitHub dán vào Supabase.
+2. Thiết lập Integration &amp; AI
+2.1. GitHub Personal Access Token (PAT)
+Để tăng giới hạn API (Rate Limit) lên 5,000 req/h:
+Truy cập GitHub Personal Access Tokens.
+Tạo token mới (Classic hoặc Fine-grained) với quyền public_repo.
+Lưu token này lại (Sử dụng cho biến môi trường GITHUB_PAT).
+2.2. Google Gemini API Key
+Truy cập Google AI Studio.
+Tạo API Key mới.
+Lưu lại (Sử dụng cho biến môi trường GOOGLE_GEMINI_API_KEY).
+3. Khởi tạo Dự án Next.js
+3.1. Tạo dự án
+Mở terminal và chạy lệnh:
+npx create-next-app@latest opendoc-ai --typescript --tailwind --eslint
+# Chọn App Router: Yes
+# Chọn src/ directory: Yes
+# Chọn import alias (@/*): Yes
+3.2. Cài đặt thư viện bổ sung
+cd opendoc-ai
+npm install @supabase/supabase-js @supabase/auth-helpers-nextjs lucide-react @uiw/react-md-editor next-themes
+# Cài đặt Shadcn/UI
+npx shadcn-ui@latest init
+# Cài đặt các components cần thiết
+npx shadcn-ui@latest add button card input scroll-area tabs toast
+3.3. Cấu hình Biến môi trường
+Tạo tệp .env.local tại thư mục gốc:
+# Supabase (Public)
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+# GitHub (Server-side)
+GITHUB_PAT=your_github_personal_access_token
+# AI (Server-side)
+GOOGLE_GEMINI_API_KEY=your_gemini_api_key
+# Auth Redirect
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+4. Chạy dự án
+npm run dev
+Truy cập http://localhost:3000 để bắt đầu phát triển.
+File PLAN.md
+Kế hoạch Thực hiện Dự án OpenDoc AI (Implementation Plan)
+Dựa trên bản đặc tả yêu cầu (SPEC.md) và hướng dẫn thiết lập (SETUP.md), dự án sẽ được triển khai theo 4 giai đoạn chính nhằm đảm bảo tính năng cốt lõi được hoàn thiện và kiểm thử kỹ lưỡng.
+1. Giai đoạn 1: Xác thực &amp; Giao diện cốt lõi (Auth &amp; Core UI)
+Mục tiêu: Thiết lập nền tảng đăng nhập và bộ khung giao diện chính.
+1.1. Cấu hình Supabase Auth: Thiết lập @supabase/auth-helpers-nextjs và logic đăng nhập qua GitHub Provider.
+1.2. Trang Đăng nhập (Login Page): Xây dựng giao diện đơn giản với nút "Login with GitHub".
+1.3. Trang Dashboard: Hiển thị danh sách các dự án (projects) của người dùng từ bảng projects trong Supabase. Thêm nút "New Project".
+1.4. Workspace Editor Layout: Xây dựng giao diện Split-pane: 
+Cột trái: Khu vực soạn thảo (sử dụng @uiw/react-md-editor) và một Sidebar nhỏ hiển thị cây thư mục.
+Cột phải: Chế độ Preview Markdown theo thời gian thực.
+2. Giai đoạn 2: Tích hợp GitHub &amp; Xử lý dữ liệu (GitHub Crawler Engine)
+Mục tiêu: Lấy thông tin mã nguồn từ GitHub để làm ngữ cảnh cho AI.
+2.1. API Route phân tích Repo: Endpoint nhận URL GitHub, kiểm tra tính hợp lệ và bóc tách owner/repo.
+2.2. GitHub API Client: Sử dụng GitHub PAT (Personal Access Token) để gọi API GitHub (Trees API) lấy cấu trúc thư mục.
+2.3. Logic lọc tệp thông minh (Smart Filtering): 
+Loại bỏ: node_modules, .git, package-lock.json, các file binary, ảnh, v.v.
+Ưu tiên: package.json, README.md (nếu có), Dockerfile, các file cấu hình (.env.example, tsconfig.json), và các file entry point chính (index.ts, main.py, v.v.).
+2.4. Fetch nội dung tệp: Tải nội dung các tệp quan trọng đã lọc để chuẩn bị gửi cho AI.
+2.5. Sidebar Tree: Hiển thị cây thư mục đã quét lên giao diện Editor để người dùng theo dõi.
+3. Giai đoạn 3: AI Engine &amp; Trình tạo Markdown (Gemini AI Integration)
+Mục tiêu: Sử dụng AI để sinh nội dung tài liệu từ mã nguồn đã bóc tách.
+3.1. Thiết kế System Prompt: 
+Role: Senior Technical Writer.
+Yêu cầu đầu ra: Markdown chuẩn với các mục: Badges, Tech Stack, Architecture, Installation, Usage, Contributing.
+3.2. Tích hợp Gemini API: Sử dụng thư viện @google/generative-ai để kết nối với Google Gemini.
+3.3. Xử lý Stream: Triển khai luồng trả kết quả từ AI dưới dạng Stream để người dùng thấy nội dung được sinh ra ngay lập tức trên Editor.
+3.4. Logic kết hợp ngữ cảnh: Gửi cây thư mục và nội dung các file cốt lõi cho AI để đảm bảo AI hiểu đúng kiến trúc dự án.
+4. Giai đoạn 4: Hoàn thiện tính năng &amp; Tối ưu hóa (Storage &amp; Polish)
+Mục tiêu: Lưu trữ dữ liệu và hoàn thiện trải nghiệm người dùng.
+4.1. Lưu trữ vào Supabase: Thực hiện các Server Actions để lưu thông tin dự án vào bảng projects và nội dung tài liệu vào bảng documents.
+4.2. Quản lý trạng thái (Draft/Completed): Cho phép người dùng lưu tạm hoặc đánh dấu đã hoàn thành.
+4.3. Chức năng tiện ích: 
+Nút Copy nội dung Markdown nhanh.
+Nút Tải xuống file README.md.
+4.4. Đánh giá &amp; Tinh chỉnh: Kiểm thử với các repository thực tế (Node.js, Python, Go) để tinh chỉnh Prompt cho kết quả tốt nhất.
+Ghi chú: Kế hoạch này sẽ được thực hiện tuần tự. Mỗi giai đoạn hoàn thành sẽ được kiểm thử (manual verify) trước khi chuyển sang giai đoạn tiếp theo.
+File CHANGELOG.md
+Changelog
+All notable changes to this project will be documented in this file.
+The format is based on Keep a Changelog,and this project adheres to Semantic Versioning.
+[0.1.0] - 2026-05-16
+Added
+Default Dark Mode: Application now starts in Dark Mode by default using next-themes.
+Back Navigation: Added a "Dashboard" back button in the Workspace Editor header for easier navigation.
+Theme Synchronization: Integrated useTheme in the Workspace Editor to ensure the Markdown editor matches the system theme.
+Changed
+Workflow Optimization: Automatic redirection to Dashboard after successfully marking a document as "Completed".
+Project Card UX: Refactored ProjectCard to be 100% clickable while maintaining independent functionality for the external GitHub link.
+Visual Feedback: Enhanced hover states and transitions on project cards using ui-ux-pro-max design principles.
+Fixed
+Icon Registry: Added missing ChevronLeft icon to the shared icons component.
+[0.0.0] - 2026-05-15
+Added
+Authentication: GitHub OAuth integration using Supabase Auth.
+Project Dashboard: View and manage analyzed repositories.
+GitHub Crawler Engine: 
+Smart filtering of repository files (ignoring node_modules, binaries, etc.).
+Priority file detection (package.json, main entry points).
+Recursive directory tree scanning via GitHub API.
+AI Documentation Engine: 
+Integration with Google Gemini 1.5 Flash.
+Real-time streaming of generated Markdown content.
+Specialized "Senior Technical Writer" system prompt for high-quality READMEs.
+Workspace Editor: 
+Split-pane interface with live Markdown preview.
+Interactive project structure sidebar.
+Markdown editor powered by @uiw/react-md-editor.
+Storage System: 
+Persistence for projects and documents in Supabase (PostgreSQL).
+Draft and Completion status management via Server Actions.
+Utility Features: 
+One-click copy to clipboard for Markdown content.
+Download documentation as README.md file.
+CI/CD Pipeline: 
+Automated linting and type-checking.
+Unit testing suite with Vitest.
+End-to-End (E2E) testing suite with Playwright.
+Automated GitHub Actions workflow.
+Delete project: Delete existing project
+Changed
+Improved AI prompt for more accurate technical architecture descriptions.
+Optimized repository scanning speed using parallel file fetching.
+Fixed
+Resolved 404/403 errors with Gemini API by switching to gemini-1.5-flash-latest and fixing API endpoint calls.
+Corrected various UI/UX layout issues in the workspace editor.
+Fixed React state updates within useEffect to avoid cascading renders.
+Note: This version marks the initial MVP release of OpenDoc AI.
